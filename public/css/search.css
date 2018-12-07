@@ -1,0 +1,220 @@
+body {
+    margin: 0;
+}
+
+header {
+    background-color: #D49A6A;
+    width: 100%;
+    height: 8vh;
+    display: flex;
+    align-items: center;
+    position: fixed;
+    z-index: 99;
+}
+
+header i {
+    font-size: 20px;
+    margin: 10px;
+    vertical-align: middle;
+    cursor: pointer;
+}
+
+header i.fa-shopping-cart {
+    margin-left: 0;
+}
+
+#search-bar {
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+#search-bar input {
+    border-width: 0.1px;
+    border-radius: 50px;
+    height: 32px;
+    padding: 10px;
+}
+
+#search-bar button {
+    background-color: rgba(0, 0, 0, 0);
+    border-width: 0;
+    border-radius: 50%;
+    z-index: 100;
+    padding: 0
+
+    /* If wanted to put the magnifying glass inside the search-bar, uncomment the below */
+    /* position: absolute; */
+    /* right: 0; */
+}
+
+#navbar-filler {
+    height: 8vh;
+}
+
+/* Result of recipe */
+
+section#recipes {
+    height: 92vh;
+}
+
+.recipe-result {
+    background-color: #eeeeee;
+    display: flex;
+    align-items: center;
+    margin: 5px;
+    border-radius: 8px;
+    top: 8vh;
+}
+
+.recipe-result img {
+    width: 20vw;
+    height: 20vw;
+    margin: 10px;
+    border-radius: 8px;
+    object-fit: cover;
+}
+
+.recipe-result h3 {
+    margin: 16px 8px;
+    width: 70vw;
+}
+
+.recipe-result i.fa-plus-square {
+    color: #444444;
+    position: absolute;
+    right: 5px;
+    top: 5px;
+    z-index: 10;
+}
+
+/* ------------- */
+/* recipe-detail */
+/* ------------- */
+
+section#recipe-detail {
+    height: 100%;
+    width: 100%;
+    position: fixed;
+    opacity: 1.0;
+    background-color: #ffffff;
+    top: 0;
+    right: 0;
+    z-index: 110;
+    transform: translate3d(100vw, 0, 0);
+    overflow: scroll;
+}
+
+/* Detailed recipe corner button */
+section#recipe-detail div.corner {
+    position: fixed;
+    top: 0;
+    background-color: #FFD0AA;
+}
+
+section#recipe-detail div.corner.left {
+    left: 0;
+    border-bottom-right-radius: 16px;
+}
+
+section#recipe-detail div.corner.right {
+    right: 0;
+    border-bottom-left-radius: 16px;
+}
+
+section#recipe-detail div.corner i {
+    margin: 5px;
+}
+
+/* Recipe title */
+section#recipe-detail h1 {
+    margin: 10px;
+    font-family: 'Lobster', 'Arial Narrow', Arial, sans-serif;
+    font-size: 30px;
+    color: #D46A6A;
+    text-decoration: underline;
+}
+
+/* Large photo */
+section#recipe-detail div#large-photo {
+    height: 45vh;
+}
+
+section#recipe-detail div#large-photo img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+}
+
+/* Source & cooking time table */
+section#recipe-detail table {
+    width: 80%;
+    margin: 15px auto;
+}
+
+section#recipe-detail table tr {
+    background-color: #eeeeee;
+}
+
+section#recipe-detail table tr.table-header {
+    background-color: #FFD0AA;
+}
+
+section#recipe-detail table tr th a {
+    text-decoration: none;
+}
+
+/* Ingredient and Instruction */
+section#recipe-detail h4 {
+    margin: 8px;
+    font-family: 'Lobster', 'Arial Narrow', Arial, sans-serif;
+    font-size: 18px;
+    color: #D46A6A;
+}
+
+section#recipe-detail ul li {
+    font-family: 'Indie Flower', 'Arial Narrow', Arial, sans-serif;
+    list-style-type: square;
+    font-size: 16px;
+}
+
+section#recipe-detail ol {
+    counter-reset: li; /* Initiate a counter */
+    list-style: none; /* Remove default numbering */
+    *list-style: decimal; /* Keep using default numbering for IE6/7 */
+    font: 15px 'Arial' 'trebuchet MS', 'lucida sans';
+    padding: 0;
+    margin-bottom: 4em;
+    text-shadow: 0 1px 0 rgba(255,255,255,.5);
+}
+
+section#recipe-detail ol li {
+    position: relative;
+    display: block;
+    padding: .4em .4em .4em 2em;
+    *padding: .4em;
+    margin: 18px;
+    background: #ddd;
+    color: #444;
+    text-decoration: none;
+    border-radius: .3em;
+    transition: all .3s ease-out;   
+}
+
+section#recipe-detail ol li:before {
+    content: counter(li);
+    counter-increment: li;
+    position: absolute; 
+    left: -1.3em;
+    top: 50%;
+    margin-top: -1.3em;
+    background: #87ceeb;
+    height: 2em;
+    width: 2em;
+    line-height: 2em;
+    border: .3em solid #fff;
+    text-align: center;
+    font-weight: bold;
+    border-radius: 2em;
+    transition: all .3s ease-out;
+}
