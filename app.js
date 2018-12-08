@@ -11,7 +11,8 @@ const cookieSession = require('cookie-session');
 const authRoutes = require('./routers/auth-routers');
 const profileRoutes = require('./routers/profile-routers');
 
-app.use(bodyParser.urlencoded({ extended: true }))
+
+app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json());
 
 const knex = require('knex')({
@@ -23,15 +24,16 @@ const knex = require('knex')({
     }
 });
 
-//initilize 
-app.use(passport.initialize());
-app.use(passport.session());
-
 //cookie session
 app.use(cookieSession({
     maxAge: 7*24*60*60*1000, //7days
     keys: [process.env.COOKIE_KEY]
 }))
+
+
+//initilize 
+app.use(passport.initialize());
+app.use(passport.session());
 
 //handlebard and view rendering
 app.engine('handlebars', hb({ defaultLayout: 'main' }));
@@ -46,6 +48,8 @@ const SearchService = require('./services/SearchService')
 const searchService = new SearchService(knex);
 app.use('/search', new SearchRouter(searchService).router);
 
+
+
 // user authentication routers
 
 
@@ -55,7 +59,7 @@ app.use('/profile', profileRoutes)
 //create home
 
 app.use('/',(req,res)=>{
-    res.render('index')
+    res.render('index', {user:req.user})
 })
 
 // app.listen

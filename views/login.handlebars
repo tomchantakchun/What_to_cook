@@ -1,7 +1,10 @@
   <nav>
     <ul>
-        <li><a href="/auth/logout">Logout</a></li>
-        <li><a href="/auth/login">Login</a></li>
+                {{#if user}}
+                <li><a href="/auth/logout">Logout</a></li>
+                {{else}}
+                <li><a href="/auth/login">Login</a></li>
+                {{/if}}
         <li><a href="/search">search</a></li>
         <li><a href="/">Homepage</a></li>
     </ul>
@@ -12,13 +15,22 @@
     <a class = "facebook-btn" href="/auth/facebook">Facebook</a>
 </main>
 
+<h2> Local Login </h2>
+<nav>
+    <form class='local' method='post' action='/auth/local'>
+    <a>User Name</a> <input type = 'text' name="userName">
+    <a>Password</a> <input type = 'password' name="password">
+    <button type='submit'>submit</button>
+    </form>
+</nav>
+
 <h2>Local Registration</h2>
 <nav>
-    <form class='local' method='post' action='/signup'>
+    <form class='local' method='POST' action="/auth/local">
     <a>User Name</a> <input type = 'text' name="userName">
     <a>Display Name</a> <input type = 'text' name="displayName">
     <a>Password</a> <input type = 'password' name="password">
-    <a>email</a> <input type = 'password' name="password">
+    <a>email</a> <input type = 'password' name="email">
     <button type='submit'>submit</button>
     </form>
 </nav>
