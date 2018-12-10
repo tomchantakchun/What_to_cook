@@ -1,32 +1,8 @@
-  <nav>
-    <ul>
-                {{#if user}}
-                <li><a href="/auth/logout">Logout</a></li>
-                {{else}}
-                <li><a href="/auth/login">Login</a></li>
-                {{/if}}
-        <li><a href="/search">search</a></li>
-        <li><a href="/">Homepage</a></li>
-    </ul>
-</nav>
-<header>Login using</header>
-<main>
-    <a class = "google-btn" href="/auth/google">Google</a>
-    <a class = "facebook-btn" href="/auth/facebook">Facebook</a>
-</main>
+<link rel="stylesheet" href="/public/css/login.css">
 
-<h2> Local Login </h2>
-<nav>
-    <form class='local' method='post' action='/auth/local'>
-    <a>User Name</a> <input type = 'text' name="userName" pattern=".{4,12}" title="You must input 4 to 12 characters" required >
-    <a>Password</a> <input type = 'password' name="password" pattern=".{4,12}" title="You must input 4 to 12 characters" required>
-    <button type='submit'>submit</button>
-    </form>
-</nav>
-
-<h2>Local Registration</h2>
-
-<!-- error message -->
+<div id="login">
+    <h1>Welcome. Please login.</h1>
+    <!-- error message -->
 <h3>{{#if success_msg}}
         <div class="alert alert-success">{{success_msg}}</div>
     {{/if}}
@@ -37,16 +13,31 @@
         <div class="alert alert-danger">{{error}}</div>
     {{/if}}
     </h3>
-    <!-- end of error message -->
+<!-- end of error message -->
+    <main>
+        <form class='local' method='post' action='/auth/local'>
+
+                <a>User Name</a> <input type='text' name="userName" pattern=".{4,12}" title="You must input 4 to 12 characters"
+                    required>
+                <a>Password</a> <input type='password' name="password" pattern=".{4,12}" title="You must input 4 to 12 characters"
+                    required>
+                <button type='submit'>submit</button>
+        </form>
+    </main>
+    <p><span class="btn-round">or</span></p>
 
 
-<nav>
-    <form class='local' method='POST' action="/auth/local">
-    <a>User Name</a> <input type = 'text' name="userName" pattern=".{4,12}" title="You must input 4 to 12 characters" required >
-    <a>Display Name</a> <input type = 'text' name="displayName" pattern=".{4,12}" title="You must input 4 to 12 characters" required >
-    <a>Password</a> <input type = 'password' name="password" pattern=".{4,12}" title="You must input 4 to 12 characters" required>
-    <a>email</a> <input type="email" name="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" required>
-    <button type='submit'>submit</button>
-    </form>
-</nav>
+    <p>
+        <a class="facebook-before"><span class="fab fa-facebook-square"></span></a>
+        <button class="facebook" onclick="location.href='/auth/facebook';">Login Using Facebook</button>
+    </p>
 
+    <p>
+        <a class="google-before"><span class="fab fa-google-plus-square"></span></a>
+        <button class="google" onclick="location.href='/auth/google';">Login Using Google+</button>
+
+    </p>
+
+    <h4>Don't have an account? Join us <a href="/auth/signup"> Here</a>!</h4>
+
+</div>

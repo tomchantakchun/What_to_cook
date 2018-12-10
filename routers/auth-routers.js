@@ -5,7 +5,7 @@ const passport = require('passport');
 const authCheck = (req, res, next) => {
     console.log('checking')
     if (req.user){
-        res.redirect('/');
+        res.redirect('/profile');
     } else {
         next()
     }
@@ -14,8 +14,17 @@ const authCheck = (req, res, next) => {
 //auth login
 
 router.get('/login', authCheck, (req, res) => {
+    console.log('login page')
     res.render('login', {user:req.user});
 });
+
+//auth signup
+
+router.get('/signup', authCheck, (req, res) => {
+    console.log('signup page')
+    res.render('signup');
+});
+
 
 //auth logout
 
