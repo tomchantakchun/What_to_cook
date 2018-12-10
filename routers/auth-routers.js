@@ -1,9 +1,19 @@
 const router = require('express').Router();
 const passport = require('passport');
 
+//bust those who loggin in already
+const authCheck = (req, res, next) => {
+    console.log('checking')
+    if (req.user){
+        res.redirect('/');
+    } else {
+        next()
+    }
+}
+
 //auth login
 
-router.get('/login', (req, res) => {
+router.get('/login', authCheck, (req, res) => {
     res.render('login', {user:req.user});
 });
 
@@ -35,21 +45,20 @@ router.get('/facebook', passport.authenticate('facebook', { scope: ['email'] }
 
 //callback route for google to redirect to
 router.get('/facebook/redirect', passport.authenticate('facebook'), (req, res) => {
-    console.log('reditecting');
+    console.log('redirecting');
     res.redirect('/profile')
 })
 
 //auth with Local
 
 router.post('/local', passport.authenticate('local',{
-    failureRedirect: '/auth/login';
+    successRedirect: '/profile',
+    failureRedirect: '/auth/login'
 }))
-// 
 
-//callback route for local to redirect to
 router.get('/local/redirect', passport.authenticate('local'), (req, res) => {
+    console.log('redirecting');
     res.redirect('/profile')
 })
-
 
 module.exports = router;

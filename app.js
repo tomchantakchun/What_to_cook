@@ -6,6 +6,7 @@ const bodyParser = require('body-parser');
 const https = require('https');
 const passport = require('passport');
 require('./services/passport-service');
+const flash = require('connect-flash'); //flash error message for login
 const fs = require('fs');
 const cookieSession = require('cookie-session');
 const authRoutes = require('./routers/auth-routers');
@@ -14,6 +15,7 @@ const profileRoutes = require('./routers/profile-routers');
 
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json());
+
 
 const knex = require('knex')({
     client: 'postgresql',
@@ -29,6 +31,16 @@ app.use(cookieSession({
     maxAge: 7*24*60*60*1000, //7days
     keys: [process.env.COOKIE_KEY]
 }))
+
+
+//flash error message
+app.use(flash());
+app.use((req, res, next) => {
+    res.locals.success_msg = req.flash('success_msg');
+    res.locals.error_msg = req.flash('error_msg');
+    res.locals.error = req.flash('error');
+    next();
+});
 
 
 //initilize 

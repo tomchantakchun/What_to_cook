@@ -10,6 +10,7 @@ const authCheck = (req, res, next) => {
 }
 
 router.get('/', authCheck, (req, res)=>{
+    console.log('login')
     res.send('you are logged in' + req.user[0].userName + 'testing')
 })
 
