@@ -1,0 +1,30 @@
+<link rel="stylesheet" href="/public/css/login.css">
+
+<div id="lobby">
+    <h1>Welcome! Please choose your group</h1>
+    <!-- end of error message -->
+    <button id="createRoom"> Create Room </button>
+    {{#each group}}
+
+    <button class="enterRoom" value="{{this.groupid}}"> {{this.groups}} </button>
+    {{/each}}
+
+
+    <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
+    <script>
+
+        $('#createRoom').click(function () {
+            var groupName = prompt('Please enter the name of your group');
+            if (groupName != null) {
+                window.location.href = "/group/create/" + groupName;
+            }
+        })
+
+        $('.enterRoom').click(function () {
+            var groupid = $(this).attr("value");
+            window.location.href = "/group/chat/" + groupid; 
+        })
+
+    </script>
+
+</div>
