@@ -29,6 +29,22 @@
     <link href="https://fonts.googleapis.com/css?family=Unlock" rel="stylesheet">
 </head>
 <body>
+    <link rel="stylesheet" href="/public/css/navbar.css">
+
+    <div class="navbar">
+    <i class="fas fa-utensils"> What to cook? </i>
+    <div class="divisions">
+        <a href="/"> <i class="fas fa-home"> Home</i></a>
+        {{#if user}}
+        <a href="/profile"> <i class="fas fa-comments" href="/profile"> Chat</i></a>
+        <a href="/search"> <i class="fas fa-search" href="/search"> Search</i></a>
+        <a href="/checklist"> <i class="fas fa-clipboard-list" href="/checklist"> checklist</i></a>
+        <a href="/auth/logout"> <i class="fas fa-sign-out-alt"> Logout</i></a>
+        {{else}}
+        <a href="/auth/login"> <i class="fas fa-sign-in-alt"> Login/Signup</i></a>
+        {{/if}}
+    </div>
+</div>
     {{{body}}}
 </body>
 </html>
