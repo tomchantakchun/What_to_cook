@@ -3,7 +3,6 @@ const passport = require('passport');
 
 //bust those who loggin in already
 const authCheck = (req, res, next) => {
-    console.log('checking')
     if (req.user){
         res.redirect('/profile');
     } else {
@@ -22,7 +21,7 @@ router.get('/login', authCheck, (req, res) => {
 
 router.get('/signup', authCheck, (req, res) => {
     console.log('signup page')
-    res.render('signup');
+    res.render('signup',  {user:req.user});
 });
 
 

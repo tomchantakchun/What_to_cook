@@ -3,25 +3,25 @@
 <div id="login">
     <h1>Welcome. Please login.</h1>
     <!-- error message -->
-<h3>{{#if success_msg}}
+    <h3>{{#if success_msg}}
         <div class="alert alert-success">{{success_msg}}</div>
-    {{/if}}
-    {{#if error_msg}}
+        {{/if}}
+        {{#if error_msg}}
         <div class="alert alert-danger">{{error_msg}}</div>
-    {{/if}}
-    {{#if error}}
+        {{/if}}
+        {{#if error}}
         <div class="alert alert-danger">{{error}}</div>
-    {{/if}}
+        {{/if}}
     </h3>
-<!-- end of error message -->
+    <!-- end of error message -->
     <main>
         <form class='local' method='post' action='/auth/local'>
 
-                <a>User Name</a> <input type='text' name="userName" pattern=".{4,12}" title="You must input 4 to 12 characters"
-                    required>
-                <a>Password</a> <input type='password' name="password" pattern=".{4,12}" title="You must input 4 to 12 characters"
-                    required>
-                <button type='submit'>submit</button>
+            <a>User Name</a> <input type='text' name="userName" pattern=".{4,12}" title="You must input 4 to 12 characters"
+                required>
+            <a>Password</a> <input type='password' name="password" pattern=".{4,12}" title="You must input 4 to 12 characters"
+                required>
+            <button type='submit'>submit</button>
         </form>
     </main>
     <p><span class="btn-round">or</span></p>

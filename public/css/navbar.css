@@ -1,0 +1,23 @@
+.navbar {
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+	justify-content: space-between;
+	padding: .5rem 1rem 0 1rem;
+	font-size: 30px;
+}
+
+.navbar .divisions i{
+	font-size: 20px;
+	padding: 0 2px;
+}
+
+.navbar a:visited
+{
+ color:inherit;
+}
+
+.navbar a
+{
+ color:inherit;
+}
