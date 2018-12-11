@@ -1,0 +1,152 @@
+:root {
+    --main-color: #D49A6A; 
+}
+
+body {
+    margin: 0;
+}
+
+header {
+    background-color: var(--main-color);
+    width: 100%;
+    height: 8vh;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: fixed;
+    z-index: 99;
+}
+
+header i {
+    font-size: 20px;
+    margin: 10px;
+    vertical-align: middle;
+    cursor: pointer;
+}
+
+header h3 {
+    font-family: 'Unloack', 'Arial Narrow', Arial, sans-serif;
+    font-weight: 700;
+    background-color: #eeeeee;
+    border-radius: 20px;
+    padding: 5px 10px;
+    margin: 0 8px;
+}
+
+#navbar-filler {
+    height: 8vh;
+}
+
+/* Result of checklist */
+
+div.category {
+    margin: 5px;
+    background-color: var(--main-color);
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+div.category-label {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+div.category-label p {
+    font-size: 20px;
+    font-weight: 700;
+    margin: 5px;
+}
+
+div.category-label i {
+    color: #777777;
+}
+
+div.online-shopping {
+    background: #ffffff;
+}
+
+/* Loading block */
+
+div.loading {
+    display: flex;
+    align-items: center;
+    border: 2px solid var(--main-color);
+}
+
+div.loading img {
+    height: 15vh;
+    width: 15vh;
+    margin: 2px;
+}
+
+div.loading p {
+    margin: 0 8px;
+}
+
+/* City super block */
+
+div.result {
+    display: grid;
+    border: 2px solid var(--main-color);
+}
+
+div.result img.citysuper {
+    width: 10vh;
+    grid-column: 2/4;
+    grid-row: 1/2;
+    margin: 3px auto;
+}
+
+div.result img.thumbnail {
+    height: 15vh;
+    width: 15vh;
+    grid-column: 1/2;
+    grid-row: 1/4;
+    width: 35vw;
+    height: 35vw;
+    margin: 1px;
+}
+
+div.result h5 {
+    grid-column: 2/4;
+    grid-row: 2/3;
+    margin: auto 3px;
+    font-size: 15px;
+    font-weight: 400;
+}
+
+div.result p {
+    grid-column: 2/4;
+    grid-row: 3/4;
+    margin: 3px;
+    font-weight: 700;
+    color: #337321;
+}
+
+/* Recipe reference table */
+
+div.ingredients {
+    margin: 5px;
+    padding: 3px;
+    background-color: #eeeeee;
+    transition: opacity 500ms ease-out;
+    opacity: 0; 
+    height: 0;
+    overflow: hidden;
+}
+
+div.ingredients.active {
+    opacity: 1;
+    height: auto;
+}
+
+.ingredients td,
+.ingredients th 
+{
+    border: 3px solid #ffffff;
+    padding: 3px 5px;
+}

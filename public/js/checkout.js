@@ -1,52 +1,68 @@
-// Get simple search result after entering keyword to search bar
-let outOfPage = false;
-$('#search-bar button').click((e) => {
-    e.preventDefault();
-
-    $('#recipes').html('');
-
-    $.post('/search/recipe', {
-        data: $('#search-bar input').val()
-    }).done((data) => {
-        shuffle(data);
-        fetchRecipe(data);
-        $('#search-bar input').val('');
+// Get what is in the cart now
+$.get('/search/cart')
+    .done((data) => {
+        listResult(data);
     })
-})
 
-// Go to checkout cart
-$('i.fa-arrow-left, i.fa-shopping-cart').click(() => {
-    $.get('/search/checkout')
+$(`#back-to-search`).click(() => {
+    $.get('/search')
         .done(() => {
-            outOfPage = true;
-            $(location).attr('href', '/search/checkout');
+            $(location).attr('href', '/search');
         })
 })
 
-let fetchRecipe = async (data) => {
+$(`#clear-all`).click(async () => {
+    for (let i = 0; i < 300; i++) {
+        if ($(`#result${i}`).length === 1) {
+            await removeRecipe(`div.recipe-result#result${i}`,i,'all');
+        }
+    }
+})
+
+$(`#checklist`).click(async () => {
+    $.get('/checklist')
+        .done(() => {
+            $(location).attr('href', '/checklist');
+        })
+})
+
+let listResult = async (data) => {
     for (let item in data) {
-        if (!outOfPage) {
-            await timeout(150);
-            $('#recipes').append(`
+        await timeout(150);
+        $('#recipes-cart').append(`
                 <div class="recipe-result animated slideInUp" id="result${item}">
                     <img src="${data[item].image}">
                     <h3>${data[item].label}</h3>
-                    <i class="far fa-plus-square"></i>
+                    <i class="fas fa-times"></i>
                 </div>
                 `)
-    
-            // save to cart
-            $(`div.recipe-result#result${item} i`).click(() => {
-                $(`div.recipe-result#result${item}`).off('click');
-                recipeChosen(`div.recipe-result#result${item}`,data,item);
-            })
-    
-            $(`div.recipe-result#result${item}`).click(() => {
-                fetchRecipeDetail(data[item].label, item);
-            })
-        }
 
+        $(`div.recipe-result#result${item} i`).click(async () => {
+            $(`div.recipe-result#result${item}`).off('click');
+            removeRecipe(`div.recipe-result#result${item}`,item,'single');
+        })
+
+        $(`div.recipe-result#result${item}`).click(() => {
+            fetchRecipeDetail(data[item].label, item);
+        })
     }
+}
+
+let removeRecipe = async (element,item,status) => {
+    $.ajax({
+        url:'/search/cart',
+        type:'DELETE',
+        data: {
+            item:item
+        }
+    })
+    await $(element).addClass('animated slideOutRight faster');
+    if (status === 'all') {
+        await timeout(100);
+    } else {
+        await timeout(500);
+    }
+    await $(element).remove();
 }
 
 // If pressed with individual recipe, detailed recipe slide out
@@ -72,7 +88,7 @@ let fetchRecipeDetail = async (label, item) => {
             </div>
 
             <div class="corner right">
-                <i class="far fa-plus-square"></i>
+                
             </div>
 
             <div id="large-photo">
@@ -110,34 +126,7 @@ let fetchRecipeDetail = async (label, item) => {
         $('section#recipe-detail i.fa-times').click(() => {
             $('section#recipe-detail').css('transform', 'translate3d(100vw, 0, 0)')
         })
-
-        $('section#recipe-detail i.fa-plus-square').click(() => {
-            recipeChosen(`div.recipe-result#result${item}`,data,0);
-            $('section#recipe-detail').css('transform', 'translate3d(100vw, 0, 0)')
-        })
-
     })
-}
-
-// Recipe chosen to cart => fadeout animation
-let recipeChosen = async (element,data,item) => {
-    await $(element).addClass('animated slideOutLeft faster');
-    await timeout(500);
-    await $(element).remove();
-// think whether need to refractor it to be stored in knex
-    await $.post('/search/cart', {
-        label: data[item].label,
-        image: data[item].image
-    }).done(() => { })
-}
-
-// Shuffle array randomly
-function shuffle(a) {
-    for (let i = a.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [a[i], a[j]] = [a[j], a[i]];
-    }
-    return a;
 }
 
 // Promisify SetTimeout
