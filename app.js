@@ -11,18 +11,33 @@ const fs = require('fs');
 // const cookieSession = require('cookie-session');
 // const authRoutes = require('./routers/auth-routers');
 // const profileRoutes = require('./routers/profile-routers');
+const flash = require('connect-flash'); //flash error message for login
+const fs = require('fs');
+const chatRoutes = require('./routers/group-routers')
+const https = require('https');
+const sio = require('socket.io')
 
 
+//https
+const options = {
+  cert: fs.readFileSync('./localhost.crt'),
+  key: fs.readFileSync('./localhost.key')
+}
+
+const server = https.createServer(options, app);
+const io = sio.listen(server);
+
+//bodyParser
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json());
 
-
+//knex
 const knex = require('knex')({
     client: 'postgresql',
     connection: {
-        database:   process.env.DB_NAME,
-        user:       process.env.USERNAME,
-        password:   process.env.PASSWORD
+        database: 'WhatToEat',
+        user: 'admin',
+        password: 'admin'
     }
 });
 
@@ -32,7 +47,6 @@ const knex = require('knex')({
 //     keys: [process.env.COOKIE_KEY]
 // }))
 
-
 //flash error message
 // app.use(flash());
 // app.use((req, res, next) => {
@@ -41,7 +55,6 @@ const knex = require('knex')({
 //     res.locals.error = req.flash('error');
 //     next();
 // });
-
 
 //initilize 
 // app.use(passport.initialize());
@@ -67,18 +80,38 @@ const ChecklistService = require('./services/ChecklistService')
 const checklistService = new ChecklistService(knex);
 app.use('/checklist', new ChecklistRouter(checklistService).router);
 
-
 // user authentication routers
 
 
 // app.use('/auth', authRoutes)
 // app.use('/profile', profileRoutes)
 
+
+//chatroom lobby
+app.get('/lobby',(req,res)=>{
+    console.log(req.user[0].id);
+    knex.select('userid','groupid','groups').from("users").innerJoin("groupsusers", "users.id", "groupsusers.userid").innerJoin("groups", "groupsusers.groupid", "groups.id").where('userid', req.user[0].id)
+    .then((group)=>{
+        console.log(group);
+        res.render('lobby', {user:req.user, group:group})
+    })
+})  
+
+//chatroom
+const chatroomService = require('./services/chatroomService')(io)
+
+//group
+const GroupRouter = require('./routers/group-routers');
+const GroupService = require('./services/groupService');
+const groupService = new GroupService(knex);
+app.use('/group', new GroupRouter(groupService).router);
+
 //create home
 
 app.use('/',(req,res)=>{
-    res.render('index', {user:req.user})
+  res.render('index', {user:req.user})
 })
+
 
 // app.listen
 
@@ -87,11 +120,3 @@ app.listen(8080, () => {
     console.log(`Listening to port 8080...`);
 })
 
-//https
-
-// const options = {
-//     cert: fs.readFileSync('./localhost.crt'),
-//     key: fs.readFileSync('./localhost.key')
-// }
-
-// https.createServer(options, app).listen(3000)
