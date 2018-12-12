@@ -1,41 +1,43 @@
 
-exports = module.exports = function(io){
-var userId;
+const knex = require('knex')({
+  client: 'postgresql',
+  connection: {
+      database: 'WhatToEat',
+      user: 'admin',
+      password: 'admin'
+  }
+});
 
-io.on('connection', function (socket) {
+exports = module.exports = function (io) {
+  var currentUser
+  var currentRoom 
+  io.on('connection', function (socket) {
     console.log('connection received');
-    var currentRoom;
-    var currentUser;
-    currentUser = userId++;
+    console.log('userid =' + socket.request._query.data.split(",")[0])//userid
+    console.log('groupid =' + socket.request._query.data.split(",")[1])//groupid
+
     socket.on('chat message', function (msg) {
-      console.log("Received ", msg);
-      console.log(this.userId)
-      if (currentRoom) {
-        io.to(currentRoom).emit('chat message', "reply from server " + msg + ' server ' + currentRoom + ' from ' +   this.userId)
-      }
-      else {
-        io.to(socket.id).emit('chat message', "reply from server " + msg + ' defaultserver ' + ' from ' +   this.userId)
-      }
-    }
-    )
-  
+      currentUser = socket.request._query.data.split(",")[0];
+      currentRoom = socket.request._query.data.split(",")[1];
+      console.log("Received ", msg + 'from' + currentUser + 'in' + currentRoom);
+      knex("chat").insert(
+        {
+            userid: currentUser,
+            groupid: currentRoom,
+            record: msg,
+        }).then(()=>{})
+    io.to(currentRoom).emit('chat message', "reply from server " + msg + ' server ' + currentRoom + ' from ' + currentUser, currentUser)
+  })
+
     socket.on('disconnect', function () {
       io.emit('user disconnected');
     });
-  
+
     socket.on('subscribe', (room) => {
-      if (currentRoom) {
-        socket.leave(currentRoom)
-        socket.join(room);
-        console.log(room);
-        currentRoom = room;
-      } else {
-        socket.join(room);
-        console.log(room);
-        currentRoom = room;
-      }
+      console.log('you have subsribe to' + room)
+      socket.join(room);
     });
-  
+
   })
 
 }

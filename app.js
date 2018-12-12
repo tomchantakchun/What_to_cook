@@ -80,12 +80,13 @@ app.use('/profile', profileRoutes)
 
 //chatroom lobby
 app.get('/lobby',(req,res)=>{
-    knex.select('groupid','groups').from("users").innerJoin("groupsusers", "users.id", "groupsusers.userid").innerJoin("groups", "groupsusers.groupid", "groups.id")
+    console.log(req.user[0].id);
+    knex.select('userid','groupid','groups').from("users").innerJoin("groupsusers", "users.id", "groupsusers.userid").innerJoin("groups", "groupsusers.groupid", "groups.id").where('userid', req.user[0].id)
     .then((group)=>{
         console.log(group);
         res.render('lobby', {user:req.user, group:group})
     })
-})
+})  
 
 //chatroom
 const chatroomService = require('./services/chatroomService')(io)

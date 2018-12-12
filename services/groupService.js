@@ -16,7 +16,7 @@ class groupService{
             //check duplicate
             if (group.length === 1) {
                 req.flash('error_msg', 'The username has been taken. Be creative!')
-            } else {
+            } else { 
                 //add group
                 console.log('adding group')
                 knex("groups").insert(
@@ -46,7 +46,7 @@ class groupService{
         this.query.then((chatrecord)=>{
             console.log(chatrecord);
             console.log(userid);
-            res.render('chatroom', {userid:userid, chatrecord:chatrecord})
+            res.render('chatroom', {userid:userid, chatrecord:chatrecord, groupid:groupid})
         })
     }
 }
