@@ -55,9 +55,17 @@ class groupService {
         this.query = knex.select('id').from('users').where('userName', username);
         this.query.then((userid) => {
             if (userid.length == 1) {
-                //
+                // add relationship
+                console.log('user found')
+                console.log(groupid)
                 var invitedUser = userid[0].id;
-
+                console.log(invitedUser)
+                knex("groupsusers").insert({
+                    userid: invitedUser,
+                    groupid: groupid
+                }).then(() => {
+                    res.redirect('/group/chat/'+groupid);
+                })
             } else {
                 //no user found
                 console.log('no user found');
