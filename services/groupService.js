@@ -8,15 +8,15 @@ const knex = require('knex')({
     }
 });
 
-class groupService{
+class groupService {
     //create a group
-    create(req, res, newName, userId){
+    create(req, res, newName, userId) {
         this.query = knex.select('*').from('groups').where('groups', newName);
         this.query.then((group) => {
             //check duplicate
             if (group.length === 1) {
                 req.flash('error_msg', 'The username has been taken. Be creative!')
-            } else { 
+            } else {
                 //add group
                 console.log('adding group')
                 knex("groups").insert(
@@ -30,7 +30,7 @@ class groupService{
                         knex("groupsusers").insert({
                             userid: userId,
                             groupid: NewGroup[0].id
-                        }).then(()=>{
+                        }).then(() => {
                             res.redirect('/lobby')
                         })
                     })
@@ -41,14 +41,34 @@ class groupService{
     //end of create a group
 
     //get group
-    get(req,res, groupid, userid){
+    get(req, res, groupid, userid) {
         this.query = knex.select('*').from('chat').where('groupid', groupid);
-        this.query.then((chatrecord)=>{
+        this.query.then((chatrecord) => {
             console.log(chatrecord);
             console.log(userid);
-            res.render('chatroom', {userid:userid, chatrecord:chatrecord, groupid:groupid})
+            res.render('chatroom', { userid: userid, chatrecord: chatrecord, groupid: groupid })
         })
     }
+
+    //invite group
+    invite(req, res, username, groupid) {
+        this.query = knex.select('id').from('users').where('userName', username);
+        this.query.then((userid) => {
+            if (userid.length == 1) {
+                //
+                var invitedUser = userid[0].id;
+
+            } else {
+                //no user found
+                console.log('no user found');
+                req.flash('error_msg', 'User not found')  
+                res.redirect('/group/chat/'+groupid);
+            }
+        }
+        )
+
+}
+
 }
 
 module.exports = groupService

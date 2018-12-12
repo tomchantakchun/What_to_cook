@@ -12,15 +12,29 @@
       #breaker{height:6vh; position:absolute}
     </style>
 
+    <button id ="invitation"> Invite other to group </button>
+
+
+    <h3>{{#if success_msg}}
+        <div class="alert alert-success">{{success_msg}}</div>
+        {{/if}}
+        {{#if error_msg}}
+        <div class="alert alert-danger">{{error_msg}}</div>
+        {{/if}}
+        {{#if error}}
+        <div class="alert alert-danger">{{error}}</div>
+        {{/if}}
+    </h3>
+
     <div class='conversation'>
      {{#each chatrecord}}
     <a class='user{{this.userid}}'> {{this.record}} </a><br>
     {{/each}}
-    <a id='breaker'>dontsee</a>
+    <a id='breaker'></a>
     </div>
 
     <form action="">
-    <input id="m" autocomplete="off" /><button>Send</button>
+    <input id="m" autocomplete="off" required/><button>Send</button>
     </form>
   
 
@@ -28,23 +42,33 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js"></script>
     <script>
       $('.user{{userid}}').css('float', 'right')
-      $(function(){var socket = "";
-        socket = io(window.location.origin, {query: 'data={{userid}},{{groupid}}'})
+      $(function () {
+        var socket = "";
+        socket = io(window.location.origin, { query: 'data={{userid}},{{groupid}}' })
 
-        socket.emit('subscribe', {{groupid}});
+        socket.emit('subscribe', {{ groupid }});
 
-        $('form').submit(function(){
-          socket.emit('chat message', $('#m').val());
-          $('#m').val('');
-          return false;
+      $('form').submit(function () {
+        socket.emit('chat message', $('#m').val());
+        $('#m').val('');
+        return false;
+      });
+
+      socket.on('chat message', function (msg, user) {
+        console.log(msg);
+        $('#breaker').before($('<a>').text(msg).addClass('user' + user).add('<br>'));
+        $('.user{{userid}}').css('float', 'right')
+        window.scrollTo(0, document.body.scrollHeight);
+      });
+    
+        $('#invitation').click(function(){
+        var invitationName = prompt('Please enter a username.');
+        var invitedgroup = {{groupid}};
+        window.location.href = "/group/invite/" + invitationName +"&" + {{groupid}}; 
+        })
+
         });
 
-        socket.on('chat message', function(msg, user){
-          console.log(msg);
-          $('#breaker').before($('<a>').text(msg).addClass('user'+user).add('<br>'));
-          $('.user{{userid}}').css('float', 'right')
-          window.scrollTo(0, document.body.scrollHeight);
-        });   
-      })
+
 
     </script>
