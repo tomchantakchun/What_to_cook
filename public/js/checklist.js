@@ -1,9 +1,3 @@
-// Get what is in the cart now
-$.get('/search/cart')
-    .done((data) => {
-        fetchIngredient(data)
-    })
-
 let fetchIngredient = async (data) => {
     let labelList = [];
     for (let index in data) {
@@ -66,37 +60,60 @@ let fetchIngredient = async (data) => {
                     }
 
                     $(`#checklist`).append(`
-                    <div class='category' id='category${i}'>
-                        <div class='category-label'>
-                            <p>
-                                ${ingredientTable[i][0]}
-                            </p>
-                            <i class="fas fa-angle-down" id='arrow${i}'></i>
-                        </div>
-                        <div class='online-shopping'>
-                            <div class='loading'>
-                                <img src='./public/gif/Spinner-1s-200px.gif'>
-                                <p>Looking for price</p>
+                    <div class='category-ingredient'>
+                        <div class='category' id='category${i}'>
+                            <div class='category-label'>
+                                <p>
+                                    ${ingredientTable[i][0]}
+                                </p>
+                                <i class="fas fa-caret-left" id='arrow${i}'></i>
+                            </div>
+                            <div class='online-shopping'>
+                                <div class='loading'>
+                                    <img src='./public/gif/Spinner-1s-200px.gif'>
+                                    <p>Looking for price</p>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class='ingredients' id='ingredient${i}'>
-                        <table>
-                            ${displayTable}
-                        </table>
+                        <div class='ingredients' id='ingredient${i}'>
+                            <table>
+                                ${displayTable}
+                            </table>
+                        </div>
                     </div>
                     `);
 
                     $(`#arrow${i}`).click(() => {
-
-                        if ($(`#ingredient${i}`).hasClass('active')) {
-                            $(`#ingredient${i}`).removeClass('active');
-                            $(`#arrow${i}`).removeClass('fa-angle-up')
-                            $(`#arrow${i}`).addClass('fa-angle-down')
+                        if ($(`#arrow${i}`).hasClass('fa-caret-right')) {
+                            if($(`#ref-table`).hasClass('active')) {
+                                $(`#ref-table`).css('transform','translate3d(100vw, 0, 0)')
+                                $(`#arrow${i}`).addClass('fa-caret-left')
+                                $(`#arrow${i}`).removeClass('fa-caret-right')
+                                $(`#ref-table`).removeClass('active')
+                            } else {
+                                $(`#arrow${i}`).addClass('fa-caret-left')
+                                $(`#arrow${i}`).removeClass('fa-caret-right')
+                            }
                         } else {
-                            $(`#ingredient${i}`).addClass('active');
-                            $(`#arrow${i}`).removeClass('fa-angle-down')
-                            $(`#arrow${i}`).addClass('fa-angle-up')
+                            if($(`#ref-table`).hasClass('active')) {
+                                $(`#ref-table`).html(`
+                                    <table>
+                                        ${displayTable}
+                                    </table>
+                                `)
+                                $(`#arrow${i}`).removeClass('fa-caret-left')
+                                $(`#arrow${i}`).addClass('fa-caret-right')
+                            } else {
+                                $(`#ref-table`).html(`
+                                    <table>
+                                        ${displayTable}
+                                    </table>
+                                `)
+                                $(`#ref-table`).css('transform','translate3d(0, 0, 0)')
+                                $(`#ref-table`).addClass('active')
+                                $(`#arrow${i}`).removeClass('fa-caret-left')
+                                $(`#arrow${i}`).addClass('fa-caret-right')
+                            }
                         }
                         
                     })
@@ -104,6 +121,9 @@ let fetchIngredient = async (data) => {
             })
         })
 }
+
+let cart = JSON.parse(sessionStorage.getItem('cart'));
+fetchIngredient(cart);
 
 async function fullLoop(table) {
     for (let item in table) {
@@ -118,10 +138,11 @@ let fetchCitySuper = async (item, index) => {
             console.log(data);
             if (data == 'No result found') {
                 $(`#category${index} div.online-shopping`).html(`
-                    <p class='no-result'>No result found</p>
+                    <div class='no-result'>
+                        <p>No result found</p>
+                    </div>
                 `)
             } else {
-                // CitySuper's logo: http://cdn.shopify.com/s/files/1/2597/8324/files/logo-citysuper.png?v=1515052045
                 $(`#category${index} div.online-shopping`).html(`
                     <div class='result'>
                         <img src='http://cdn.shopify.com/s/files/1/2597/8324/files/logo-citysuper.png?v=1515052045' class='citysuper'>

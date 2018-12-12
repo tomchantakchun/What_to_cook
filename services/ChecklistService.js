@@ -41,11 +41,10 @@ class ChecklistService {
             userDataDir: USER_DATA_DIR
         });
         const page = await browser.newPage();
-
         let result = [];
-
-        await page.goto(url, { waitUntil: 'domcontentloaded' });
+        
         try {
+            await page.goto(url, { waitUntil: 'domcontentloaded' });
             await page
                 .waitForSelector('#search_res_container > div:nth-child(1) > a > div.isp_image_div > img')
                 .then(async () => {

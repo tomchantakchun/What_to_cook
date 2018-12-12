@@ -1,8 +1,33 @@
 // Get what is in the cart now
-$.get('/search/cart')
-    .done((data) => {
-        listResult(data);
-    })
+
+let listResult = async (data) => {
+    for (let item in data) {
+        await timeout(150);
+        $('#recipes-cart').append(`
+                <div class="recipe-result animated slideInUp" id="result${item}">
+                    <img src="${data[item].image}">
+                    <h3>${data[item].label}</h3>
+                    <i class="fas fa-times"></i>
+                </div>
+                `)
+
+        $(`div.recipe-result#result${item} i`).click(async () => {
+            $(`div.recipe-result#result${item}`).off('click');
+            removeRecipe(`div.recipe-result#result${item}`,item,'single');
+        })
+
+        $(`div.recipe-result#result${item}`).click(() => {
+            fetchRecipeDetail(data[item].label, item);
+        })
+
+        if(window.matchMedia( "(min-width: 800px)" ).matches && item == '0') {
+            fetchRecipeDetail(data[item].label, item);
+        }
+    }
+}
+
+let cart = JSON.parse(sessionStorage.getItem('cart'));
+listResult(cart);
 
 $(`#back-to-search`).click(() => {
     $.get('/search')
@@ -26,36 +51,9 @@ $(`#checklist`).click(async () => {
         })
 })
 
-let listResult = async (data) => {
-    for (let item in data) {
-        await timeout(150);
-        $('#recipes-cart').append(`
-                <div class="recipe-result animated slideInUp" id="result${item}">
-                    <img src="${data[item].image}">
-                    <h3>${data[item].label}</h3>
-                    <i class="fas fa-times"></i>
-                </div>
-                `)
-
-        $(`div.recipe-result#result${item} i`).click(async () => {
-            $(`div.recipe-result#result${item}`).off('click');
-            removeRecipe(`div.recipe-result#result${item}`,item,'single');
-        })
-
-        $(`div.recipe-result#result${item}`).click(() => {
-            fetchRecipeDetail(data[item].label, item);
-        })
-    }
-}
-
 let removeRecipe = async (element,item,status) => {
-    $.ajax({
-        url:'/search/cart',
-        type:'DELETE',
-        data: {
-            item:item
-        }
-    })
+    cart.splice(item,1);
+    sessionStorage.setItem('cart',JSON.stringify(cart));
     await $(element).addClass('animated slideOutRight faster');
     if (status === 'all') {
         await timeout(100);
@@ -82,43 +80,81 @@ let fetchRecipeDetail = async (label, item) => {
             instructionList += `<li>${data[0].instructionLine[item]}</li>`
         }
 
-        $('section#recipe-detail').html(`
-            <div class="corner left">
-                <i class="fas fa-times"></i>
-            </div>
+        if(window.matchMedia( "(max-width: 800px)" ).matches) {
+            $('section#recipe-detail').html(`
+                <div class="corner left">
+                    <i class="fas fa-times"></i>
+                </div>
 
-            <div class="corner right">
-                
-            </div>
+                <div id="large-photo">
+                    <img src="${data[0].image}">
+                </div>
+                <h1>${data[0].label}</h1>
 
-            <div id="large-photo">
-                <img src="${data[0].image}">
-            </div>
-            <h1>${data[0].label}</h1>
+                <table>
+                    <tr class="table-header">
+                        <th>Source</th>
+                        <th>Serving</th>
+                    </tr>
+                    <tr>
+                        <th>
+                            <a href='${data[0].sourceUrl}'>Delish</a>
+                        </th>
+                        <th>${data[0].serving}</th>
+                    </tr>
+                </table>
 
-            <table>
-                <tr class="table-header">
-                    <th>Source</th>
-                    <th>Serving</th>
-                </tr>
-                <tr>
-                    <th>
-                        <a href='${data[0].sourceUrl}'>Delish</a>
-                    </th>
-                    <th>${data[0].serving}</th>
-                </tr>
-            </table>
+                <h4>Ingredient</h4>
+                <ul>
+                    ${ingredientList}
+                </ul>
 
-            <h4>Ingredient</h4>
-            <ul>
-                ${ingredientList}
-            </ul>
+                <h4>Instruction</h4>
+                <ol>
+                    ${instructionList}
+                </ol>
+            `)
 
-            <h4>Instruction</h4>
-            <ol>
-                ${instructionList}
-            </ol>
-        `)
+            $('section#recipe-detail').css('transform', 'translate3d(0, 0, 0)')
+            $('section#recipe-detail').css('transition', 'transform 0.6s')
+
+            $('section#recipe-detail i.fa-times').click(() => {
+                $('section#recipe-detail').css('transform', 'translate3d(100vw, 0, 0)')
+            })
+
+        } else {
+
+            $('section#recipe-detail').html(`
+                <h1>${data[0].label}</h1>
+                <div id="large-photo">
+                    <img src="${data[0].image}">
+                </div>
+                <div class='ingredient-column'>
+                    <h4>Ingredient</h4>
+                    <ul>
+                        ${ingredientList}
+                    </ul>
+                </div>
+
+                <table>
+                    <tr class="table-header">
+                        <th>Source</th>
+                        <th>Serving</th>
+                    </tr>
+                    <tr>
+                        <th>
+                            <a href='${data[0].sourceUrl}'>Delish</a>
+                        </th>
+                        <th>${data[0].serving}</th>
+                    </tr>
+                </table>
+
+                <h4 class='instruction-column'>Instruction</h4>
+                <ol class='instruction-column'>
+                    ${instructionList}
+                </ol>
+            `)
+        }
 
         $('section#recipe-detail').css('transform', 'translate3d(0, 0, 0)')
         $('section#recipe-detail').css('transition', 'transform 0.6s')

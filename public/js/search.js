@@ -27,13 +27,11 @@ let fetchRecipe = async (data) => {
     for (let item in data) {
         if (!outOfPage) {
             await timeout(150);
-            $('#recipes').append(`
-                <div class="recipe-result animated slideInUp" id="result${item}">
+            $('#recipes').append(`<div class="recipe-result animated slideInUp" id="result${item}">
                     <img src="${data[item].image}">
                     <h3>${data[item].label}</h3>
                     <i class="far fa-plus-square"></i>
-                </div>
-                `)
+                </div>`)
     
             // save to cart
             $(`div.recipe-result#result${item} i`).click(() => {
@@ -44,6 +42,10 @@ let fetchRecipe = async (data) => {
             $(`div.recipe-result#result${item}`).click(() => {
                 fetchRecipeDetail(data[item].label, item);
             })
+
+            if(window.matchMedia( "(min-width: 800px)" ).matches && item == '0') {
+                fetchRecipeDetail(data[item].label, item);
+            }
         }
 
     }
@@ -66,55 +68,87 @@ let fetchRecipeDetail = async (label, item) => {
             instructionList += `<li>${data[0].instructionLine[item]}</li>`
         }
 
-        $('section#recipe-detail').html(`
-            <div class="corner left">
-                <i class="fas fa-times"></i>
-            </div>
 
-            <div class="corner right">
-                <i class="far fa-plus-square"></i>
-            </div>
 
-            <div id="large-photo">
-                <img src="${data[0].image}">
-            </div>
-            <h1>${data[0].label}</h1>
+        if(window.matchMedia( "(max-width: 800px)" ).matches) {
+            $('section#recipe-detail').html(`
+                <div class="corner left">
+                    <i class="fas fa-times"></i>
+                </div>
 
-            <table>
-                <tr class="table-header">
-                    <th>Source</th>
-                    <th>Serving</th>
-                </tr>
-                <tr>
-                    <th>
-                        <a href='${data[0].sourceUrl}'>Delish</a>
-                    </th>
-                    <th>${data[0].serving}</th>
-                </tr>
-            </table>
+                <div class="corner right">
+                    <i class="far fa-plus-square"></i>
+                </div>
 
-            <h4>Ingredient</h4>
-            <ul>
-                ${ingredientList}
-            </ul>
+                <div id="large-photo">
+                    <img src="${data[0].image}">
+                </div>
+                <h1>${data[0].label}</h1>
 
-            <h4>Instruction</h4>
-            <ol>
-                ${instructionList}
-            </ol>
-        `)
+                <table>
+                    <tr class="table-header">
+                        <th>Source</th>
+                        <th>Serving</th>
+                    </tr>
+                    <tr>
+                        <th>
+                            <a href='${data[0].sourceUrl}'>Delish</a>
+                        </th>
+                        <th>${data[0].serving}</th>
+                    </tr>
+                </table>
 
-        $('section#recipe-detail').css('transform', 'translate3d(0, 0, 0)')
-        $('section#recipe-detail').css('transition', 'transform 0.6s')
+                <h4>Ingredient</h4>
+                <ul>
+                    ${ingredientList}
+                </ul>
 
-        $('section#recipe-detail i.fa-times').click(() => {
-            $('section#recipe-detail').css('transform', 'translate3d(100vw, 0, 0)')
-        })
+                <h4>Instruction</h4>
+                <ol>
+                    ${instructionList}
+                </ol>
+            `)
 
-        $('section#recipe-detail i.fa-plus-square').click(() => {
-            recipeChosen(`div.recipe-result#result${item}`,data,0);
-            $('section#recipe-detail').css('transform', 'translate3d(100vw, 0, 0)')
-        })
+            $('section#recipe-detail').css('transform', 'translate3d(0, 0, 0)')
+            $('section#recipe-detail').css('transition', 'transform 0.6s')
+
+            $('section#recipe-detail i.fa-times').click(() => {
+                $('section#recipe-detail').css('transform', 'translate3d(100vw, 0, 0)')
+            })
+
+        } else {
+
+            $('section#recipe-detail').html(`
+                <h1>${data[0].label}</h1>
+                <div id="large-photo">
+                    <img src="${data[0].image}">
+                </div>
+                <div class='ingredient-column'>
+                    <h4>Ingredient</h4>
+                    <ul>
+                        ${ingredientList}
+                    </ul>
+                </div>
+
+                <table>
+                    <tr class="table-header">
+                        <th>Source</th>
+                        <th>Serving</th>
+                    </tr>
+                    <tr>
+                        <th>
+                            <a href='${data[0].sourceUrl}'>Delish</a>
+                        </th>
+                        <th>${data[0].serving}</th>
+                    </tr>
+                </table>
+
+                <h4 class='instruction-column'>Instruction</h4>
+                <ol class='instruction-column'>
+                    ${instructionList}
+                </ol>
+            `)
+        }
 
     })
 }
@@ -125,10 +159,31 @@ let recipeChosen = async (element,data,item) => {
     await timeout(500);
     await $(element).remove();
 // think whether need to refractor it to be stored in knex
-    await $.post('/search/cart', {
-        label: data[item].label,
-        image: data[item].image
-    }).done(() => { })
+    if (sessionStorage.getItem('cart') == null) {
+        sessionStorage.setItem('cart',JSON.stringify(
+            [
+                {
+                    label: data[item].label,
+                    image: data[item].image
+                }
+            ]
+        ));
+    } else {
+        let cart = JSON.parse(sessionStorage.getItem('cart'))
+        cart.push(
+            {
+                label: data[item].label,
+                image: data[item].image
+            }
+        )
+        sessionStorage.setItem('cart',JSON.stringify(cart))
+    }
+
+    // Stored on server, less preferable
+    // await $.post('/search/cart', {
+    //     label: data[item].label,
+    //     image: data[item].image
+    // }).done(() => { })
 }
 
 // Shuffle array randomly

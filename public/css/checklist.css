@@ -1,9 +1,13 @@
+body {
+    margin: 0;
+}
+
 :root {
     --main-color: #D49A6A; 
 }
 
-body {
-    margin: 0;
+div.navbar {
+    position: fixed;
 }
 
 header {
@@ -39,9 +43,13 @@ header h3 {
 
 /* Result of checklist */
 
+#checklist {
+    width: 100%;
+}
+
 div.category {
     margin: 5px;
-    background-color: var(--main-color);
+    background-color: #ffffff;
 }
 
 table {
@@ -53,12 +61,14 @@ div.category-label {
     display: flex;
     justify-content: center;
     align-items: center;
+    background-color: var(--main-color);
 }
 
 div.category-label p {
     font-size: 20px;
     font-weight: 700;
     margin: 5px;
+    width: 80%;
 }
 
 div.category-label i {
@@ -78,9 +88,9 @@ div.loading {
 }
 
 div.loading img {
-    height: 15vh;
-    width: 15vh;
-    margin: 2px;
+    height: 15vw;
+    width: 15vw;
+    margin: 1px;
 }
 
 div.loading p {
@@ -102,8 +112,6 @@ div.result img.citysuper {
 }
 
 div.result img.thumbnail {
-    height: 15vh;
-    width: 15vh;
     grid-column: 1/2;
     grid-row: 1/4;
     width: 35vw;
@@ -127,21 +135,71 @@ div.result p {
     color: #337321;
 }
 
+.no-result {
+    grid-column: 1/4;
+    grid-row: 1/4;
+    margin: auto;
+    font-size: 24px;
+    cursor: default;
+    border: 2px solid var(--main-color);
+    display: flex;
+    height: 110px;
+}
+
+.no-result p {
+    margin: auto;
+    color: #337321;
+}
+
+#ref-table {
+    z-index: 110;
+    transform: translate3d(100vw, 0, 0);
+    position: fixed;
+    max-width: 400px;
+    border-radius: 20px;
+    bottom: 10px;
+    right: 10px;
+    display: flex;
+    justify-content: center;
+    background: #eeeeee;
+    padding: 10px;
+    transition: transform 500ms;
+}
+
+#ref-table td,
+#ref-table th 
+{
+    border: 3px solid #ffffff;
+    padding: 3px 5px;
+}
+
+.fas {
+    cursor: pointer;
+}
+
 /* Recipe reference table */
 
 div.ingredients {
-    margin: 5px;
-    padding: 3px;
+    padding: 0;
     background-color: #eeeeee;
     transition: opacity 500ms ease-out;
     opacity: 0; 
+    width: 0;
     height: 0;
     overflow: hidden;
+    margin: 0;
+    display: inline-block;
+    float: left;
 }
 
 div.ingredients.active {
+    padding: 3px;
+    margin: 5px;
     opacity: 1;
     height: auto;
+    width: auto;
+    display: block;
+    float: none;
 }
 
 .ingredients td,
@@ -149,4 +207,77 @@ div.ingredients.active {
 {
     border: 3px solid #ffffff;
     padding: 3px 5px;
+}
+
+@media only screen and (min-width: 550px) {
+    section#checklist {
+        display: inline-block;
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .category {
+        height: 180px;
+    }
+
+    div.result img.thumbnail {
+        width: 15vw;
+        height: 15vw;
+    }
+
+    div.loading {
+        height: 150px;;
+    }
+
+    div.result {
+        height: 150px;
+    }
+
+    .category-ingredient {
+        display: flex;
+        flex-flow: column;
+        float: left;
+        width: 49%;
+    }
+}
+
+@media only screen and (min-width: 800px) {
+    section#checklist {
+        grid-template-columns: 1fr 1fr 1fr;
+    }
+
+    div.result img.thumbnail {
+        width: 100px;
+        height: 100px;
+    }
+
+    div.loading img {
+        height: 100px;
+        width: 100px;
+    }
+
+    .category-ingredient {
+        width: 32%;
+    }
+
+    div.result,div.loading {
+        height: 110px;
+    }
+
+    div.result {
+        cursor: pointer;
+    }
+
+    .category {
+        height: 140px;
+    }
+}
+
+@media only screen and (min-width: 1300px) {
+    section#checklist {
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+    }
+
+    .category-ingredient {
+        width: 24%;
+    }
 }
