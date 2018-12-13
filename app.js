@@ -30,11 +30,12 @@ app.use(bodyParser.json());
 
 //knex
 const knex = require('knex')({
-    client: 'postgresql',
+    client: 'pg',
     connection: {
-        database: 'WhatToEat',
-        user: 'admin',
-        password: 'admin'
+        host:process.env.RDS_ENDPOINT,
+        database: process.env.RDS_DB_NAME,
+        user: process.env.RDS_USERNAME,
+        password: process.env.RDS_PASSWORD
     }
 });
 

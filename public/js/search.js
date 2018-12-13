@@ -26,7 +26,9 @@ $('i.fa-arrow-left, i.fa-shopping-cart').click(() => {
 let fetchRecipe = async (data) => {
     for (let item in data) {
         if (!outOfPage) {
-            await timeout(150);
+            if (item < 15) {
+                await timeout(150);
+            }
             $('#recipes').append(`<div class="recipe-result animated slideInUp" id="result${item}">
                     <img src="${data[item].image}">
                     <h3>${data[item].label}</h3>
@@ -159,8 +161,8 @@ let recipeChosen = async (element,data,item) => {
     await timeout(500);
     await $(element).remove();
 // think whether need to refractor it to be stored in knex
-    if (sessionStorage.getItem('cart') == null) {
-        sessionStorage.setItem('cart',JSON.stringify(
+    if (sessionStorage.getItem('what_to_cook_cart') == null) {
+        sessionStorage.setItem('what_to_cook_cart',JSON.stringify(
             [
                 {
                     label: data[item].label,
@@ -169,14 +171,14 @@ let recipeChosen = async (element,data,item) => {
             ]
         ));
     } else {
-        let cart = JSON.parse(sessionStorage.getItem('cart'))
+        let cart = JSON.parse(sessionStorage.getItem('what_to_cook_cart'))
         cart.push(
             {
                 label: data[item].label,
                 image: data[item].image
             }
         )
-        sessionStorage.setItem('cart',JSON.stringify(cart))
+        sessionStorage.setItem('what_to_cook_cart',JSON.stringify(cart))
     }
 
     // Stored on server, less preferable

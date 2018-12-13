@@ -19,11 +19,19 @@ class SearchRouter {
     }
 
     getSearchPage(req, res) {
-        res.render('search',{page:'search'});
+        res.render('search',
+        {
+            no_need_logo:true,
+            search:true
+        });
     }
 
     getCheckoutPage(req, res) {
-        res.render('checkout');
+        res.render('checkout',
+        {
+            no_need_logo:true,
+            checkout:true,
+        });
     }
 
     searchRecipeResult(req, res) {
