@@ -29,21 +29,24 @@ let fetchRecipe = async (data) => {
             if (item < 15) {
                 await timeout(150);
             }
-            $('#recipes').append(`<div class="recipe-result animated slideInUp" id="result${item}">
-                    <img src="${data[item].image}">
-                    <h3>${data[item].label}</h3>
-                    <i class="far fa-plus-square"></i>
-                </div>`)
-    
-            // save to cart
-            $(`div.recipe-result#result${item} i`).click(() => {
-                $(`div.recipe-result#result${item}`).off('click');
-                recipeChosen(`div.recipe-result#result${item}`,data,item);
-            })
-    
-            $(`div.recipe-result#result${item}`).click(() => {
-                fetchRecipeDetail(data[item].label, item);
-            })
+
+            if (item < 50) {
+                $('#recipes').append(`<div class="recipe-result animated slideInUp" id="result${item}">
+                        <img src="${data[item].image}">
+                        <h3>${data[item].label}</h3>
+                        <i class="far fa-plus-square"></i>
+                    </div>`)
+        
+                // save to cart
+                $(`div.recipe-result#result${item} i`).click(() => {
+                    $(`div.recipe-result#result${item}`).off('click');
+                    recipeChosen(`div.recipe-result#result${item}`,data,item);
+                })
+        
+                $(`div.recipe-result#result${item}`).click(() => {
+                    fetchRecipeDetail(data[item].label, item);
+                })
+            }
 
             if(window.matchMedia( "(min-width: 800px)" ).matches && item == '0') {
                 fetchRecipeDetail(data[item].label, item);
