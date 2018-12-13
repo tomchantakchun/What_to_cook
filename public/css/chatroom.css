@@ -107,3 +107,95 @@ p{
     width: 70px;
     border-radius: 50%
 }
+
+/* For carosel */
+
+h6 {
+  position: absolute;
+  bottom: 10px;
+  margin: 0 5px;
+  color: #ffffff;
+  background: #444444;
+  border-radius: 5px;
+  padding: 3px;
+  left: 0;
+  right: 0;
+  text-align: center;
+}
+
+#carousel {
+  position: fixed;
+  height: 240px;
+  width: 100%;
+  /* top: 50%; */
+  /* transform: translateY(-30%); */
+  overflow: hidden;
+  background: #666;
+  padding: 20px
+}
+#carousel div {
+  position: absolute;
+  transition: transform 1s, left 1s, opacity 1s, z-index 0s;
+  opacity: 1;
+  cursor: pointer;
+}
+#carousel div img {
+  width: 200px;
+  transition: width 1s;
+  border-radius: 10px;
+}
+#carousel div.hideLeft {
+  left: 33%;
+  opacity: 0;
+  transform: translateY(50%) translateX(-50%);
+}
+#carousel div.hideLeft img {
+  width: 100px;
+}
+#carousel div.hideRight {
+  left: 67%;
+  opacity: 0;
+  transform: translateY(50%) translateX(-50%);
+}
+#carousel div.hideRight img {
+  width: 100px;
+}
+#carousel div.prev {
+  z-index: 5;
+  left: 43%;
+  transform: translateY(25px) translateX(-50%);
+}
+#carousel div.prev img {
+  width: 150px;
+}
+#carousel div.prevLeftSecond {
+  z-index: 4;
+  left: 38%;
+  transform: translateY(50%) translateX(-50%);
+  opacity: 0.7;
+}
+#carousel div.prevLeftSecond img {
+  width: 100px;
+}
+#carousel div.selected {
+  z-index: 10;
+  left: 50%;
+  transform: translateY(0px) translateX(-50%);
+}
+#carousel div.next {
+  z-index: 5;
+  left: 57%;
+  transform: translateY(25px) translateX(-50%);
+}
+#carousel div.next img {
+  width: 150px;
+}
+#carousel div.nextRightSecond {
+  z-index: 4;
+  left: 62%;
+  transform: translateY(50%) translateX(-50%);
+  opacity: 0.7;
+}
+#carousel div.nextRightSecond img {
+  width: 100px;
+}

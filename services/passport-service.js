@@ -4,11 +4,12 @@ const FacebookStrategy = require('passport-facebook');
 const LocalStrategy = require('passport-local').Strategy;
 const dotenv = require('dotenv').config();
 const knex = require('knex')({
-    client: 'postgresql',
+    client: 'pg',
     connection: {
-        database: 'delish-recipe',
-        user: 'postgres',
-        password: 'postgres'
+        host:process.env.RDS_ENDPOINT,
+        database: process.env.RDS_DB_NAME,
+        user: process.env.RDS_USERNAME,
+        password: process.env.RDS_PASSWORD
     }
 });
 

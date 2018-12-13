@@ -1,10 +1,11 @@
 const router = require('express').Router();
 const knex = require('knex')({
-    client: 'postgresql',
+    client: 'pg',
     connection: {
-        database: 'delish-recipe',
-        user: 'postgres',
-        password: 'postgres'
+        host:process.env.RDS_ENDPOINT,
+        database: process.env.RDS_DB_NAME,
+        user: process.env.RDS_USERNAME,
+        password: process.env.RDS_PASSWORD
     }
 });
 

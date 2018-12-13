@@ -1,8 +1,5 @@
 <link rel="stylesheet" href="/public/css/chatroom.css">
-
-
 <button id="invitation"> Invite other to group </button>
-
 <h3>{{#if success_msg}}
   <div class="alert alert-success">{{success_msg}}</div>
   {{/if}}
@@ -13,25 +10,18 @@
   <div class="alert alert-danger">{{error}}</div>
   {{/if}}
 </h3>
-
   {{#each chatrecord}}
-
   <div class='talk-line user{{this.userid}}' id='{{this.userid}}'>
   <img class='talk-bubble tri-right left-top user{{this.userid}}' src='{{this.profilePic}}'>
   <div class='talk-bubble tri-right left-top user{{this.userid}}'>
   <div class='talktext'><p class='user{{this.userid}}'>{{this.record}}</p>{{this.user}}</div>
-
   </div>
   </div>
   {{/each}}
   <div class='talk-line' id='breaker'></div>
-
-
 <form action="">
   <input id="m" autocomplete="off" required /><button>Send</button>
 </form>
-
-
 <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js"></script>
 <script>
@@ -40,15 +30,13 @@
   $(function () {
     var socket = "";
     socket = io(window.location.origin, { query: 'data={{userid}},{{groupid}}' })
-
     socket.emit('subscribe', {{ groupid }});
 
   $('form').submit(function () {
-    socket.emit('chat message', $('#m').val());
+     socket.emit('chat message', $('#m').val());
     $('#m').val('');
     return false;
   });
-
   socket.on('chat message', function (msg, user, profilePic) {
     console.log(msg);
     $('#breaker').before(`
@@ -61,17 +49,13 @@
   );
   $('.user{{userid}}').css('text-align', 'right')
     $("img[src='NA']").attr('src', 'https://okawariplease.files.wordpress.com/2017/09/pompompurin.png')
-
     window.scrollTo(0, document.body.scrollHeight);
   });
-
   $('#invitation').click(function () {
     var invitationName = prompt('Please enter a username.');
     var invitedgroup = {{ groupid }};
       window.location.href = "/group/invite/" + invitationName + "&" + {{ groupid }}; 
   })
     $("img[src='NA']").attr('src', 'https://okawariplease.files.wordpress.com/2017/09/pompompurin.png')
-
         });
-
 </script>
