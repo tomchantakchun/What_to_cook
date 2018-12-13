@@ -20,6 +20,7 @@
     display: flex;
     align-items: center;
     font-family: 'Font Awesome 5 Free';
+    cursor: pointer;
   }
 
   #invitation i, #searchReceipt i {

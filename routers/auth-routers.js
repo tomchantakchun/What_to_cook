@@ -42,7 +42,7 @@ router.get('/google', passport.authenticate('google', {
 //callback route for google to redirect to
 router.get('/google/redirect', passport.authenticate('google'), (req, res) => {
     console.log('reditecting');
-    res.redirect('/profile')
+    res.redirect('/lobby')
 })
 
 //auth with facebook
@@ -54,19 +54,19 @@ router.get('/facebook', passport.authenticate('facebook', { scope: ['email'] }
 //callback route for google to redirect to
 router.get('/facebook/redirect', passport.authenticate('facebook'), (req, res) => {
     console.log('redirecting');
-    res.redirect('/profile')
+    res.redirect('/lobby')
 })
 
 //auth with Local
 
 router.post('/local', passport.authenticate('local',{
-    successRedirect: '/profile',
+    successRedirect: '/lobby',
     failureRedirect: '/auth/login'
 }))
 
 router.get('/local/redirect', passport.authenticate('local'), (req, res) => {
     console.log('redirecting');
-    res.redirect('/profile')
+    res.redirect('/lobby')
 })
 
 module.exports = router;
