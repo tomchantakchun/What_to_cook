@@ -11,18 +11,19 @@ const cookieSession = require('cookie-session');
 const authRoutes = require('./routers/auth-routers');
 const profileRoutes = require('./routers/profile-routers');
 const chatRoutes = require('./routers/group-routers')
-const https = require('https');
-const sio = require('socket.io')
+// const https = require('https');
+const server = require('http').Server(app)
+const io = require('socket.io')(server)
 
 
 //https
-const options = {
-  cert: fs.readFileSync('./localhost.crt'),
-  key: fs.readFileSync('./localhost.key')
-}
+// const options = {
+//   cert: fs.readFileSync('./localhost.crt'),
+//   key: fs.readFileSync('./localhost.key')
+// }
 
-const server = https.createServer(options, app);
-const io = sio.listen(server);
+// const server = https.createServer(options, app);
+// const io = sio.listen(app);
 
 //bodyParser
 app.use(bodyParser.urlencoded({ extended: true }))
@@ -113,14 +114,14 @@ app.use('/',(req,res)=>{
 
 // https.listen
 
-server.listen(3000, () => {
-    console.log('listening to port 3000 https')
-  })
+// server.listen(3000, () => {
+//     console.log('listening to port 3000 https')
+//   })
 
 // app.listen
-// app.listen(3000, () => {
-//     console.log(`Listening to port 3000...`);
-// })
+server.listen(80, () => {
+    console.log(`Listening to port 3000...`);
+})
 
 
 
