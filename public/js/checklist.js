@@ -122,7 +122,7 @@ let fetchIngredient = async (data) => {
         })
 }
 
-let cart = JSON.parse(sessionStorage.getItem('cart'));
+let cart = JSON.parse(sessionStorage.getItem('what_to_cook_cart'));
 fetchIngredient(cart);
 
 async function fullLoop(table) {
@@ -160,7 +160,7 @@ let fetchCitySuper = async (item, index) => {
 }
 
 // back to cart button
-$(`#back-to-cart`).click(async () => {
+$(`.back-to-cart`).click(async () => {
     $.get('/search/checkout')
         .done(() => {
             $(location).attr('href', '/search/checkout');

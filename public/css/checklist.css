@@ -10,7 +10,18 @@ div.navbar {
     position: fixed;
 }
 
-header {
+.page-function {
+    display: flex;
+    align-items: center;
+}
+
+.navbar .page-function i{
+	font-size: 20px;
+	padding: 0 2px;
+    cursor: pointer;
+}
+
+/* header {
     background-color: var(--main-color);
     width: 100%;
     height: 8vh;
@@ -26,9 +37,9 @@ header i {
     margin: 10px;
     vertical-align: middle;
     cursor: pointer;
-}
+} */
 
-header h3 {
+/* header h3 {
     font-family: 'Unloack', 'Arial Narrow', Arial, sans-serif;
     font-weight: 700;
     background-color: #eeeeee;
@@ -39,7 +50,7 @@ header h3 {
 
 #navbar-filler {
     height: 8vh;
-}
+} */
 
 /* Result of checklist */
 
