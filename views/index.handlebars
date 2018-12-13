@@ -1,20 +1,25 @@
+    <link rel="stylesheet" href="/public/css/index.css">
+    
+    <div id="logo">
+        <img src="/public/logo/b9376ded-30c7-4ca1-a104-e807474f5f05.png">
+    </div>
+
     <nav>
         <ul>
             <ul>
                 {{#if user}}
-                <li><a href="/auth/logout">Logout</a></li>
+                <a href="/search"><li>Search</li></a>
+                <a href="/auth/logout"><li>Logout</li></a>
                 {{else}}
-                <li><a href="/auth/login">Login</a></li>
+                <a href="/auth/login"><li>Login</li></a>
                 {{/if}}
-                <li><a href="/search">search</a></li>
-                <li><a href="/">Homepage</a></li>
+                <a href="/"><li>Homepage</li></a>
             </ul>
         </ul>
     </nav>
-    <header>
-        <h1>Tom tom tom</h1>
+    {{!-- <header>
         <h2>Homepage</h2>
     </header>
     <main>
-        <p>Random Content</p>
-    </main>
+        <p>Check this out!</p>
+    </main> --}}

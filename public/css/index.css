@@ -1,0 +1,43 @@
+nav {
+    display: flex;
+    justify-content: center;
+}
+
+nav ul {
+    padding: 0;
+}
+
+nav ul li {
+	background: #D49A6A;
+	border: none;
+	border-radius: 3px;
+	font-family: inherit;
+	font-size: 14px;
+	height: 50px;
+	outline: none;
+	padding: 0px 10px;
+	width: 280px;
+    -webkit-appearance:none;
+    list-style: none;
+    font-size: 20px;
+    color: #ffffff;
+    margin: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+nav ul a {
+    text-decoration: none;
+    color: #ffffff;
+}
+
+#logo {
+    display: flex;
+    justify-content: center;
+}
+
+
+
