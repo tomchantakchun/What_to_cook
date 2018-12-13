@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -14,8 +13,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
     {{!-- Fontawesome --}}
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU"
-        crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
 
     {{!-- Handlebars cdn --}}
     <script src="/public/libs/handlebars.runtime-v4.0.12.js"></script>
@@ -30,49 +28,20 @@
     {{!-- 3. Unlock --}}
     <link href="https://fonts.googleapis.com/css?family=Unlock" rel="stylesheet">
 </head>
-
 <body>
     <link rel="stylesheet" href="/public/css/navbar.css">
 
-    <div id="filler"></div>
-
     <div class="navbar">
-
-        {{!-- Remove logo for page need space for their function --}}
-        {{#if no_need_logo}}
+    <i class="fas fa-utensils"> What to cook? </i>
+    <div class="divisions">
+        <a href="/"> <i class="fas fa-home"> Home</i></a>
+        {{#if user}}
+        <a href="/lobby"> <i class="fas fa-comments" href="/lobby"> Chat</i></a>
+        <a href="/search"> <i class="fas fa-search" href="/search"> Search</i></a>
+        <a href="/checklist"> <i class="fas fa-clipboard-list" href="/checklist"> checklist</i></a>
+        <a href="/auth/logout"> <i class="fas fa-sign-out-alt"> Logout</i></a>
         {{else}}
-        <a href="/"><i class="fas fa-utensils"> What to cook? </i></a>
-        {{/if}}
-
-        {{!-- Appear in search page --}}
-        {{#if search}}
-        <div class="page-function">
-            <i class="fas fa-arrow-left" title='Go to Cart'></i>
-            <i class="fas fa-shopping-cart" title='Go to Cart'></i>
-            <div id="search-bar">
-                <form id="search-recipe">
-                    <input type="search" placeholder="Random recipe?">
-                    <button type="submit">
-                        <i class="fas fa-search" title='Search'></i>
-                    </button>
-                </form>
-            </div>
-        </div>
-        {{/if}}
-
-        {{!-- Appear in checkout page --}}
-        {{#if checkout}}
-        <div class="page-function">
-            <i class="fas fa-plus" id="add-to-group"> Add to group</i>
-            {{!-- <h3 id="add-to-group">
-                add to group
-            </h3> --}}
-
-            <i class="fas fa-arrow-right" id="back-to-search"> Back to search</i>
-            {{!-- <h3 id="back-to-search">
-                back to search
-            </h3> --}}
-        </div>
+        <a href="/auth/login"> <i class="fas fa-sign-in-alt"> Login/Signup</i></a>
         {{/if}}
 
         {{!-- Appear in checklist page --}}
@@ -116,9 +85,7 @@
         </div>
     </div>
     </div>
+</div>
     {{{body}}}
-    <script src="../../public/js/hamburgar.js"></script>
-
 </body>
-
 </html>

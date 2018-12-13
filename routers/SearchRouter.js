@@ -19,6 +19,7 @@ class SearchRouter {
     }
 
     getSearchPage(req, res) {
+<<<<<<< HEAD
         res.render('search',
         {
             no_need_logo:true,
@@ -34,6 +35,13 @@ class SearchRouter {
             checkout:true,
             user:req.user
         });
+=======
+        res.render('search',{page:'search'});
+    }
+
+    getCheckoutPage(req, res) {
+        res.render('checkout');
+>>>>>>> 8f69d572c1a2a398b6bc507ebbc218d97209f116
     }
 
     searchRecipeResult(req, res) {
