@@ -1,9 +1,13 @@
 <link rel="stylesheet" href="/public/css/chatroom.css">
 
-<div id="carousel-wrap">
+{{!-- <div id="carousel-wrap"> --}}
   <div id="carousel">
+    <span id="bar"></span>
+    <span>
+      <i class="fas fa-caret-right" id="carosel-toggle"></i>
+    </span>
   </div>
-</div>
+{{!-- </div> --}}
 
 <h3>{{#if success_msg}}
   <div class="alert alert-success">{{success_msg}}</div>
@@ -38,6 +42,8 @@
   $('.user{{userid}}').css('text-align', 'right')
   //socket
   $(function () {
+        window.scrollTo(0, document.body.scrollHeight);
+
     var socket = "";
     socket = io(window.location.origin, { query: 'data={{userid}},{{groupid}}' })
     socket.emit('subscribe', {{ groupid }});
@@ -85,6 +91,7 @@
   // For carousel moving
 
 function moveToSelected(element) {
+
   if (element == "next") {
     var selected = $(".selected").next();
   } else if (element == "prev") {
@@ -97,6 +104,8 @@ function moveToSelected(element) {
   var prev = $(selected).prev();
   var prevSecond = $(prev).prev();
   var nextSecond = $(next).next();
+
+
 
   $(selected).removeClass().addClass("selected");
 
@@ -181,6 +190,17 @@ while (cart[carti] != undefined) {
 $('#carousel div').click(function () {
   moveToSelected($(this));
 });
-  
+
+$('#carosel-toggle').click(()=>{
+  if ($('#carousel').hasClass('inactive')) {
+    $('#carousel').removeClass('inactive');
+    $('#carosel-toggle').removeClass('fa-caret-left');
+    $('#carosel-toggle').addClass('fa-caret-right');
+  } else {
+    $('#carousel').addClass('inactive');
+    $('#carosel-toggle').addClass('fa-caret-left');
+    $('#carosel-toggle').removeClass('fa-caret-right');
+  }
+})
 
 </script>
