@@ -13,9 +13,9 @@ body {
 }
 
 .navbar {
-    position: fixed;
-    display: flex;
-    flex-wrap: wrap;
+	position: fixed;
+	display: flex;
+	flex-wrap: wrap;
 	justify-content: space-between;
 	font-size: 30px;
 	background: #D49A6A;
@@ -27,6 +27,7 @@ body {
 	top: 0;
 	box-sizing: border-box;
 	z-index: 200;
+	box-shadow: 1px 1px #aaaaaa;
 }
 
 .navbar .divisions {
@@ -127,7 +128,16 @@ body {
   }
   .overlay.open li:nth-of-type(4) {
 	animation-delay: .50s;
-  }
+	}
+	.overlay.open li:nth-of-type(5) {
+	animation-delay: .55s;
+	}
+	.overlay.open li:nth-of-type(6) {
+	animation-delay: .60s;
+	}
+	.overlay.open li:nth-of-type(7) {
+	animation-delay: .65s;
+	}
   .overlay nav {
 	position: relative;
 	height: 70%;
