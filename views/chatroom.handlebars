@@ -1,6 +1,10 @@
 <link rel="stylesheet" href="/public/css/chatroom.css">
-<button id="invitation"> Invite other to group </button>
-<button id="searchReceipt"> Search Receipt </button>
+
+<div id="carousel-wrap">
+  <div id="carousel">
+  </div>
+</div>
+
 <h3>{{#if success_msg}}
   <div class="alert alert-success">{{success_msg}}</div>
   {{/if}}
@@ -11,23 +15,27 @@
   <div class="alert alert-danger">{{error}}</div>
   {{/if}}
 </h3>
-  {{#each chatrecord}}
-  <div class='talk-line user{{this.userid}}' id='{{this.userid}}'>
+{{#each chatrecord}}
+<div class='talk-line user{{this.userid}}' id='{{this.userid}}'>
   <img class='talk-bubble tri-right left-top user{{this.userid}}' src='{{this.profilePic}}'>
   <div class='talk-bubble tri-right left-top user{{this.userid}}'>
-  <p class='nametag'>{{this.displayName}}</p>
-  <div class='talktext'><p class='user{{this.userid}}'>{{this.record}}</p></div>
+    <p class='nametag'>{{this.displayName}}</p>
+    <div class='talktext'>
+      <p class='user{{this.userid}}'>{{this.record}}</p>
+    </div>
   </div>
-  </div>
-  {{/each}}
-  <div class='talk-line' id='breaker'></div>
+</div>
+{{/each}}
+<div class='talk-line' id='breaker'></div>
 <form action="">
   <input id="m" autocomplete="off" required /><button>Send</button>
 </form>
+
+
 <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js"></script>
 <script>
-  $('.user{{userid}}').css('text-align', 'right')  
+  $('.user{{userid}}').css('text-align', 'right')
   //socket
   $(function () {
     var socket = "";
@@ -35,7 +43,7 @@
     socket.emit('subscribe', {{ groupid }});
 
   $('form').submit(function () {
-     socket.emit('chat message', $('#m').val());
+    socket.emit('chat message', $('#m').val());
     $('#m').val('');
     return false;
   });
@@ -49,28 +57,129 @@
   <div class='talktext'><p class=user${user}>${msg}</p></div>
   </div>
   </div>`
-  );
-  $('.user{{userid}}').css('text-align', 'right')
+    );
+    $('.user{{userid}}').css('text-align', 'right')
     $("img[src='NA']").attr('src', 'https://okawariplease.files.wordpress.com/2017/09/pompompurin.png')
     window.scrollTo(0, document.body.scrollHeight);
   });
   $('#invitation').click(function () {
     var invitationName = prompt('Please enter a username.');
     var invitedgroup = {{ groupid }};
-      window.location.href = "/group/invite/" + invitationName + "&" + {{ groupid }}; 
+  window.location.href = "/group/invite/" + invitationName + "&" + {{ groupid }}; 
   })
-    $("img[src='NA']").attr('src', 'https://okawariplease.files.wordpress.com/2017/09/pompompurin.png')
+  $("img[src='NA']").attr('src', 'https://okawariplease.files.wordpress.com/2017/09/pompompurin.png')
         });
 
-    //search receipt on click tr
-     $('#searchReceipt').click(function () {
-          sessionStorage.setItem('what_to_cook_group',JSON.stringify(
-            [
-                {
-                    groupid: {{groupid}}
+  //search receipt on click tr
+  $('#searchReceipt').click(function () {
+    sessionStorage.setItem('what_to_cook_group', JSON.stringify(
+      [
+        {
+          groupid: {{ groupid }}
                 }
             ]
-        ));
-     window.location.href = "../../../search/";
+  ));
+  window.location.href = "../../../search/";
   })
+
+  // For carousel moving
+
+function moveToSelected(element) {
+  if (element == "next") {
+    var selected = $(".selected").next();
+  } else if (element == "prev") {
+    var selected = $(".selected").prev();
+  } else {
+    var selected = element;
+  }
+
+  var next = $(selected).next();
+  var prev = $(selected).prev();
+  var prevSecond = $(prev).prev();
+  var nextSecond = $(next).next();
+
+  $(selected).removeClass().addClass("selected");
+
+  $(prev).removeClass().addClass("prev");
+  $(next).removeClass().addClass("next");
+
+  $(nextSecond).removeClass().addClass("nextRightSecond");
+  $(prevSecond).removeClass().addClass("prevLeftSecond");
+
+  $(nextSecond).nextAll().removeClass().addClass('hideRight');
+  $(prevSecond).prevAll().removeClass().addClass('hideLeft');
+}
+
+// inserting carousel
+
+// example
+let cart = [
+  { 
+    "label": "Chicken-and-Garlic Chowder", 
+    "image": "https://www.edamam.com/web-img/eee/eee811712e83dc270a5ca244a9e6dd77.jpg" 
+  }, 
+  { 
+    "label": "Carrot-Avocado Salad", 
+    "image": "https://www.edamam.com/web-img/7bf/7bf6e8586158d7046557a2fa1aba09ec.jpg" 
+  }, 
+  { 
+    "label": "Asian Rice Salad", 
+    "image": "https://www.edamam.com/web-img/d8c/d8cd611dba11055e3f9404125b5d4900.jpg" 
+  }, 
+  { 
+    "label": "Bacon and Egg Savory Oat Bake", 
+    "image": "https://www.edamam.com/web-img/7bf/7bf74604ec3051557bd0c123413edabf.jpg" 
+  }, 
+  { 
+    "label": "Soy-Braised Turkey with Turkey Rice", 
+    "image": "https://www.edamam.com/web-img/4af/4af7c8c129b2d8ed0669649a19591e04.jpg" 
+  }
+]
+
+if (cart[0] != undefined) {
+  $('#carousel').append(`
+    <div class="selected">
+      <i class="fas fa-times-circle"></i>
+      <img src="${cart[0].image}">
+      <h6>${cart[0].label}</h6>
+    </div>
+  `)
+}
+
+if (cart[1] != undefined) {
+  $('#carousel').append(`
+    <div class="next">
+      <i class="fas fa-times-circle"></i>
+      <img src="${cart[1].image}">
+      <h6>${cart[1].label}</h6>
+    </div>
+  `)
+}
+
+if (cart[2] != undefined) {
+  $('#carousel').append(`
+    <div class="nextRightSecond">
+      <i class="fas fa-times-circle"></i>
+      <img src="${cart[2].image}">
+      <h6>${cart[2].label}</h6>
+    </div>
+  `)
+}
+
+let carti = 3
+//while (cart[carti] != undefined) {
+//  $('#carousel').append(`
+//    <div class="hideRight">
+//      <i class="fas fa-times-circle"></i>
+//      <img src="${cart[carti].image}">
+//      <h6>${cart[carti].label}</h6>
+//    </div>
+//  `)
+//}
+
+$('#carousel div').click(function () {
+  moveToSelected($(this));
+});
+  
+
 </script>
