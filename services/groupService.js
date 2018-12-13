@@ -43,7 +43,18 @@ class groupService {
 
     //get group
     get(req, res, groupid, userid, displayName) {
+        let tempRecipe
+        let myArray = []
         this.query = knex.select('*').from('chat').where('groupid', groupid).rightOuterJoin('users', 'users.id', 'chat.userid')
+        this.query2 = knex.select('recipe').from('groupsrecipes').where('groupid', groupid).then((data)=>{
+            console.log('i want' + data[0].recipe);
+            tempRecipe = data;
+            for (let i of data){
+                myArray.push(i.recipe)
+            }
+            console.log(myArray)
+            
+        })
         this.query.then((chatrecord) => {
             res.render('chatroom', { 
                 userid: userid, 
@@ -52,7 +63,8 @@ class groupService {
                 displayName: displayName,
                 user:req.user,
                 no_need_logo:true,
-                chatroom:true
+                chatroom:true,
+                tempRecipe:myArray
             })
         })
     }
@@ -85,7 +97,7 @@ class groupService {
     }
 
     addReceipt(req, res, recipe, group) {
-        console.log('groupid is' + group[0].groupid)
+        
         for (let item of recipe){
             console.log(item)
             knex('groupsrecipes').insert(
