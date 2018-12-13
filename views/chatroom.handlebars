@@ -167,15 +167,16 @@ if (cart[2] != undefined) {
 }
 
 let carti = 3
-//while (cart[carti] != undefined) {
-//  $('#carousel').append(`
-//    <div class="hideRight">
-//      <i class="fas fa-times-circle"></i>
-//      <img src="${cart[carti].image}">
-//      <h6>${cart[carti].label}</h6>
-//    </div>
-//  `)
-//}
+while (cart[carti] != undefined) {
+  $('#carousel').append(`
+    <div class="hideRight">
+      <i class="fas fa-times-circle"></i>
+      <img src="${cart[carti].image}">
+      <h6>${cart[carti].label}</h6>
+    </div>
+  `)
+    carti++;
+}
 
 $('#carousel div').click(function () {
   moveToSelected($(this));
