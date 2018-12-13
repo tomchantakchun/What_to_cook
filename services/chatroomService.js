@@ -11,6 +11,7 @@ const knex = require('knex')({
 exports = module.exports = function (io) {
   var currentUser
   var currentRoom 
+  var profilePic
   io.on('connection', function (socket) {
     console.log('connection received');
     console.log('userid =' + socket.request._query.data.split(",")[0])//userid
@@ -26,7 +27,13 @@ exports = module.exports = function (io) {
             groupid: currentRoom,
             record: msg,
         }).then(()=>{})
-    io.to(currentRoom).emit('chat message', "reply from server " + msg + ' server ' + currentRoom + ' from ' + currentUser, currentUser)
+    this.query2 = knex('users').select('profilePic').where('id', currentUser)
+    this.query2.then((data)=>{
+      profilePic = data[0].profilePic;
+    console.log(profilePic);
+    io.to(currentRoom).emit('chat message', msg, currentUser, profilePic)
+  })
+    
   })
 
     socket.on('disconnect', function () {

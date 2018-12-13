@@ -2,8 +2,16 @@ body {
     margin: 0;
 }
 
+:root {
+    --main-color: #D49A6A; 
+}
+
+div.navbar {
+    position: fixed;
+}
+
 header {
-    background-color: #D49A6A;
+    background-color: var(--main-color);
     width: 100%;
     height: 8vh;
     display: flex;
@@ -36,6 +44,12 @@ header i.fa-shopping-cart {
     padding: 10px;
 }
 
+@media only screen and (min-width: 800px) {
+    #search-bar input {
+        width: 30vw;
+    }
+}
+
 #search-bar button {
     background-color: rgba(0, 0, 0, 0);
     border-width: 0;
@@ -55,7 +69,42 @@ header i.fa-shopping-cart {
 /* Result of recipe */
 
 section#recipes {
-    height: 92vh;
+    height: 90vh;
+}
+
+@media only screen and (min-width: 550px) {
+    section#recipes {
+        display: inline-block;
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .recipe-result {
+        float: left;
+    }
+}
+
+@media only screen and (min-width: 800px) {
+    section#recipes {
+        width: 38%;
+        display: inline-block;
+    }
+
+    .recipe-result {
+        cursor: pointer;
+        width: 100%;
+    }
+}
+
+@media only screen and (min-width: 1300px) {
+    section#recipes {
+        width: 59%;
+        display: inline-block;
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .recipe-result {
+        width: 48%;
+    }
 }
 
 .recipe-result {
@@ -67,6 +116,12 @@ section#recipes {
     top: 8vh;
 }
 
+@media only screen and (min-width: 1300px) {
+    .recipe-result {
+        float: left;
+    }
+}
+
 .recipe-result img {
     width: 20vw;
     height: 20vw;
@@ -75,9 +130,37 @@ section#recipes {
     object-fit: cover;
 }
 
+
 .recipe-result h3 {
     margin: 16px 8px;
     width: 70vw;
+}
+
+@media only screen and (min-width: 550px) {
+    .recipe-result img {
+        width: 80px;
+        height: 80px;
+    }
+
+    .recipe-result h3 {
+        width: 25vw;
+    }  
+}
+
+@media only screen and (min-width: 800px) {
+    .recipe-result h3 {
+        width: 60%;
+    }  
+}
+
+@media only screen and (min-width: 1300px) {
+    .recipe-result img {
+        float: left;
+    }
+
+    .recipe-result h3 {
+        width: 90%;
+    }
 }
 
 .recipe-result i.fa-plus-square {
@@ -131,7 +214,7 @@ section#recipe-detail h1 {
     margin: 10px;
     font-family: 'Lobster', 'Arial Narrow', Arial, sans-serif;
     font-size: 30px;
-    color: #D46A6A;
+    color: var(--main-color);
     text-decoration: underline;
 }
 
@@ -169,7 +252,7 @@ section#recipe-detail h4 {
     margin: 8px;
     font-family: 'Lobster', 'Arial Narrow', Arial, sans-serif;
     font-size: 18px;
-    color: #D46A6A;
+    color: var(--main-color);
 }
 
 section#recipe-detail ul li {
@@ -217,4 +300,72 @@ section#recipe-detail ol li:before {
     font-weight: bold;
     border-radius: 2em;
     transition: all .3s ease-out;
+}
+
+/* Desktop version of the recipe detail */
+
+@media only screen and (min-width: 800px) {
+    section#recipe-detail {
+        width: 58%;
+        transform: none;
+        height: 90vh;
+        overflow: scroll;
+        position: fixed;
+        top: 8vh;
+        display: inline-block;
+        box-shadow: 2px 2px #aaaaaa;
+        border: 1px solid #aaaaaa;
+        z-index: 90;
+        margin: 1px;
+        border-radius: 10px;
+        display: grid;
+    }
+
+    section#recipe-detail h1 {
+        grid-row: 1/2;
+        grid-column: 1/4;
+        font-size: 50px;
+    }
+
+    
+    section#recipe-detail div#large-photo {
+        height: 20vw;
+        width: 20vw;
+        grid-row: 2/4;
+        grid-column: 1/2;
+        margin: auto;
+    }
+
+    section#recipe-detail div#large-photo img {
+        border-radius: 10px;
+    }
+
+    section#recipe-detail table {
+        margin: auto;
+        grid-row: 4/5;
+        grid-column: 1/2;
+    }
+
+    section#recipe-detail .ingredient-column {
+        grid-column: 2/4;
+        grid-row: 2/5;
+    }
+
+    section#recipe-detail .instruction-column {
+        grid-column: 1/4;
+    }
+
+    section#recipe-detail ol {
+        margin: 5px 0;
+    }
+
+    section#recipe-detail ol li {
+        margin: 5px 18px;  
+    }
+}
+
+@media only screen and (min-width: 1300px) {
+    section#recipe-detail {
+        width: 40%;
+    }
 }

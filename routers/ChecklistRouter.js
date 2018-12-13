@@ -13,11 +13,7 @@ class ChecklistRouter {
     }
 
     getChecklistPage(req, res) {
-        res.render('checklist',
-        {
-            no_need_logo:true,
-            checklist:true
-        });
+        res.render('checklist');
     }
 
     getIngredients(req, res) {

@@ -26,7 +26,7 @@ let listResult = async (data) => {
     }
 }
 
-let cart = JSON.parse(sessionStorage.getItem('what_to_cook_cart'));
+let cart = JSON.parse(sessionStorage.getItem('cart'));
 listResult(cart);
 
 $(`#back-to-search`).click(() => {
@@ -40,8 +40,6 @@ $(`#clear-all`).click(async () => {
     for (let i = 0; i < 300; i++) {
         if ($(`#result${i}`).length === 1) {
             await removeRecipe(`div.recipe-result#result${i}`,i,'all');
-            cart = [];
-            sessionStorage.setItem('what_to_cook_cart',JSON.stringify(cart))
         }
     }
 })
@@ -55,7 +53,7 @@ $(`#checklist`).click(async () => {
 
 let removeRecipe = async (element,item,status) => {
     cart.splice(item,1);
-    sessionStorage.setItem('what_to_cook_cart',JSON.stringify(cart));
+    sessionStorage.setItem('cart',JSON.stringify(cart));
     await $(element).addClass('animated slideOutRight faster');
     if (status === 'all') {
         await timeout(100);
