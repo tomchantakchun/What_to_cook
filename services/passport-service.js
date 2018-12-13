@@ -6,9 +6,9 @@ const dotenv = require('dotenv').config();
 const knex = require('knex')({
     client: 'postgresql',
     connection: {
-        database: 'delish-recipe',
-        user: 'postgres',
-        password: 'postgres'
+        database: 'WhatToEat',
+        user: 'admin',
+        password: 'admin'
     }
 });
 

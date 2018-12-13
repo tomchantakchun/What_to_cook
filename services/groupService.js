@@ -2,9 +2,9 @@ const router = require('express').Router();
 const knex = require('knex')({
     client: 'postgresql',
     connection: {
-        database: 'delish-recipe',
-        user: 'postgres',
-        password: 'postgres'
+        database: 'WhatToEat',
+        user: 'admin',
+        password: 'admin'
     }
 });
 
@@ -42,9 +42,10 @@ class groupService {
 
     //get group
     get(req, res, groupid, userid) {
-        this.query = knex.select('*').from('chat').where('groupid', groupid).rightOuterJoin('users','users.id', 'chat.userid')
+        this.query = knex.select('*').from('chat').where('groupid', groupid);
         this.query.then((chatrecord) => {
-            console.log(chatrecord)
+            console.log(chatrecord);
+            console.log(userid);
             res.render('chatroom', { userid: userid, chatrecord: chatrecord, groupid: groupid })
         })
     }

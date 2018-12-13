@@ -3,10 +3,10 @@ const app = express();
 const hb = require('express-handlebars');
 require('dotenv').config();
 const bodyParser = require('body-parser');
-const flash = require('connect-flash'); //flash error message for login
-const fs = require('fs');
 const passport = require('passport');
 require('./services/passport-service');
+const flash = require('connect-flash'); //flash error message for login
+const fs = require('fs');
 const cookieSession = require('cookie-session');
 const authRoutes = require('./routers/auth-routers');
 const profileRoutes = require('./routers/profile-routers');
@@ -25,17 +25,16 @@ const server = https.createServer(options, app);
 const io = sio.listen(server);
 
 //bodyParser
-app.use(bodyParser.urlencoded({ extended: true }))
+app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json());
 
 //knex
 const knex = require('knex')({
-    client: 'pg',
+    client: 'postgresql',
     connection: {
-        host:process.env.RDS_ENDPOINT,
-        database: process.env.RDS_DB_NAME,
-        user: process.env.RDS_USERNAME,
-        password: process.env.RDS_PASSWORD
+        database: 'WhatToEat',
+        user: 'admin',
+        password: 'admin'
     }
 });
 
@@ -66,17 +65,11 @@ app.use('/public',express.static(__dirname + '/public'));
 
 // Start routing and rendering
 
-// 1. Search recipe and cart
 const SearchRouter = require('./routers/SearchRouter')
 const SearchService = require('./services/SearchService')
 const searchService = new SearchService(knex);
 app.use('/search', new SearchRouter(searchService).router);
 
-// 2. Checklist
-const ChecklistRouter = require('./routers/ChecklistRouter')
-const ChecklistService = require('./services/ChecklistService')
-const checklistService = new ChecklistService(knex);
-app.use('/checklist', new ChecklistRouter(checklistService).router);
 
 // user authentication routers
 
@@ -111,14 +104,12 @@ app.use('/',(req,res)=>{
 })
 
 
-// https.listen
-
-server.listen(3000, () => {
-    console.log('listening to port 3000 https')
-  })
-
 // app.listen
+
 app.listen(8080, () => {
     console.log(`Listening to port 8080...`);
 })
 
+server.listen(3000, () => {
+  console.log('listening to port 3000 https')
+})
