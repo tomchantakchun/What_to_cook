@@ -2,7 +2,7 @@ const router = require('express').Router();
 const knex = require('knex')({
     client: 'pg',
     connection: {
-        host:process.env.RDS_ENDPOINT,
+        host: process.env.RDS_ENDPOINT,
         database: process.env.RDS_DB_NAME,
         user: process.env.RDS_USERNAME,
         password: process.env.RDS_PASSWORD
@@ -43,10 +43,9 @@ class groupService {
 
     //get group
     get(req, res, groupid, userid, displayName) {
-        this.query = knex.select('*').from('chat').where('groupid', groupid).rightOuterJoin('users','users.id', 'chat.userid')
+        this.query = knex.select('*').from('chat').where('groupid', groupid).rightOuterJoin('users', 'users.id', 'chat.userid')
         this.query.then((chatrecord) => {
-            console.log(chatrecord)
-            res.render('chatroom', { userid: userid, chatrecord: chatrecord, groupid: groupid, displayName:displayName })
+            res.render('chatroom', { userid: userid, chatrecord: chatrecord, groupid: groupid, displayName: displayName })
         })
     }
 
@@ -64,19 +63,31 @@ class groupService {
                     userid: invitedUser,
                     groupid: groupid
                 }).then(() => {
-                    res.redirect('/group/chat/'+groupid);
+                    res.redirect('/group/chat/' + groupid);
                 })
             } else {
                 //no user found
                 console.log('no user found');
-                req.flash('error_msg', 'User not found')  
-                res.redirect('/group/chat/'+groupid);
+                req.flash('error_msg', 'User not found')
+                res.redirect('/group/chat/' + groupid);
             }
         }
         )
 
-}
+    }
 
+    addReceipt(req, res, recipe, group) {
+        console.log('groupid is' + group[0].groupid)
+        for (let item of recipe){
+            console.log(item)
+            knex('groupsrecipes').insert(
+                {
+                groupid:group[0].groupid,
+                recipe: item
+                }
+            ).then(()=>{})
+        }
+    }
 }
 
 module.exports = groupService

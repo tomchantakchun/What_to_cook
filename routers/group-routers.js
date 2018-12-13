@@ -9,6 +9,8 @@ class groupRouter {
         router.get('/create/:name', (req, res) => { this.createGroup(req, res) })
         router.get('/chat/:id', (req, res) => { this.enterGroup(req, res) })
         router.get('/invite/:name&:group', (req,res)=>{this.inviteToGroup(req,res)})
+        router.get('/receipe/', (req,res)=>{this.addReceipt(req,res)})
+
         this.router = router;
     }
 
@@ -27,6 +29,12 @@ class groupRouter {
         console.log(req.params.name)
         console.log(req.params.group)
         return this.groupSerivce.invite(req,res,req.params.name,req.params.group)
+    }
+
+    addReceipt(req,res){
+        console.log(req.body.tempReceipt)
+        console.log(req.body.tempGroup)
+        return this.groupSerivce.addReceipt(req,res,req.body.tempReceipt,req.body.tempGroup)
     }
 }
 
