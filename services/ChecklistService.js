@@ -36,9 +36,9 @@ class ChecklistService {
 
         const USER_DATA_DIR = 'D:\\temp\\puppeteer_user_data';
         const browser = await puppeteer.launch({
-            headless: true,
-            executablePath: '/mnt/c/Software_dev_course/Javascript_project/Quantopian optimization/node_modules/puppeteer/.local-chromium/chrome-win/chrome.exe',
-            userDataDir: USER_DATA_DIR
+            headless: true
+            // executablePath: '/mnt/c/Software_dev_course/Javascript_project/Quantopian optimization/node_modules/puppeteer/.local-chromium/chrome-win/chrome.exe',
+            // userDataDir: USER_DATA_DIR
         });
         const page = await browser.newPage();
         let result = [];
