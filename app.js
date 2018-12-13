@@ -111,7 +111,11 @@ app.use('/',(req,res)=>{
 })
 
 
-// app.listen
+// https.listen
+
+server.listen(3000, () => {
+    console.log('listening to port 3000 https')
+  })
 
 // app.listen
 app.listen(8080, () => {
