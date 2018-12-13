@@ -42,11 +42,11 @@ class groupService {
     //end of create a group
 
     //get group
-    get(req, res, groupid, userid) {
+    get(req, res, groupid, userid, displayName) {
         this.query = knex.select('*').from('chat').where('groupid', groupid).rightOuterJoin('users','users.id', 'chat.userid')
         this.query.then((chatrecord) => {
             console.log(chatrecord)
-            res.render('chatroom', { userid: userid, chatrecord: chatrecord, groupid: groupid })
+            res.render('chatroom', { userid: userid, chatrecord: chatrecord, groupid: groupid, displayName:displayName })
         })
     }
 

@@ -1,0 +1,11 @@
+html, body {
+    height: 100%;
+}
+
+#lobby {
+    margin: 15px;
+    box-shadow: 1px 1px #aaaaaa;
+    border: 1px solid #aaaaaa;
+    padding: 10px;
+    
+}

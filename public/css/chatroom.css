@@ -108,6 +108,12 @@ p{
     border-radius: 50%
 }
 
+.nametag {
+  transform: translateX(7px);
+  padding: 5px 12px;
+  color: rgb(156, 92, 40);
+}
+
 /* For carosel */
 
 h6 {

@@ -19,7 +19,7 @@ class groupRouter {
 
     enterGroup(req, res) {
         console.log(req.params.id)
-        return this.groupSerivce.get(req, res, req.params.id, req.user[0].id) 
+        return this.groupSerivce.get(req, res, req.params.id, req.user[0].id, req.user[0].displayName) 
     }
 
     inviteToGroup(req,res){

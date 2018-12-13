@@ -14,7 +14,8 @@
   <div class='talk-line user{{this.userid}}' id='{{this.userid}}'>
   <img class='talk-bubble tri-right left-top user{{this.userid}}' src='{{this.profilePic}}'>
   <div class='talk-bubble tri-right left-top user{{this.userid}}'>
-  <div class='talktext'><p class='user{{this.userid}}'>{{this.record}}</p>{{this.user}}</div>
+  <p class='nametag'>{{this.displayName}}</p>
+  <div class='talktext'><p class='user{{this.userid}}'>{{this.record}}</p></div>
   </div>
   </div>
   {{/each}}
@@ -43,7 +44,8 @@
   <div class='talk-line user${user}'>
   <img class='talk-bubble tri-right left-top user${user}' src='${profilePic}'>
   <div class='talk-bubble tri-right left-top'>
-  <div class='talktext'><p class=user${user}'>${msg}</p></div>
+    <p class='nametag'>{{displayName}}</p>
+  <div class='talktext'><p class=user${user}>${msg}</p></div>
   </div>
   </div>`
   );
