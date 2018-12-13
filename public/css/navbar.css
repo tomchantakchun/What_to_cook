@@ -1,36 +1,10 @@
-:root {
-    --main-color: #D49A6A; 
-}
-
-body {
-	margin: 0;
-}
-
-#filler {
-	height: 8vh;
-	width: 100%;
-}
-
 .navbar {
-    position: fixed;
+    position: relative;
     display: flex;
     flex-wrap: wrap;
 	justify-content: space-between;
+	padding: .5rem 1rem 0 1rem;
 	font-size: 30px;
-	background: #D49A6A;
-	padding: 10px;
-	color: #444444;
-	height: 8vh;
-	max-height: 50px;
-	width: 100%;
-	top: 0;
-	box-sizing: border-box;
-	z-index: 200;
-}
-
-.navbar .divisions {
-	display: flex;
-	align-items: center;
 }
 
 .navbar .divisions i{

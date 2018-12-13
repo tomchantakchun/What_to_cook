@@ -18,6 +18,8 @@ h3 {
     color: #FF604D;
 }
 
+
+
 #login {
 	margin: 30px auto;
     width: 300px;
@@ -38,7 +40,7 @@ form input[type="text"], input[type="password"], input[type="email"] {
 }
 
 form button[type="submit"] {
-	background-color: #D49A6A;
+	background-color: #444444;
 	border: none;
 	border-radius: 3px;
 	color: #f4f4f4;
@@ -47,9 +49,8 @@ form button[type="submit"] {
 	height: 50px;
 	text-transform: uppercase;
 	width: 300px;
-  	-webkit-appearance:none;
-	margin: 10px 0;
-}	
+  -webkit-appearance:none;
+}
 
 form a {
 	color: #5a5656;
