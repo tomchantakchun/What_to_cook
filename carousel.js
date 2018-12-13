@@ -33,6 +33,7 @@ function moveToSelected(element) {
   if (cart[0] != undefined) {
     $('#carousel').append(`
       <div class="selected">
+        <i class="fas fa-times-circle"></i>
         <img src="${cart[0].image}">
         <h6>${cart[0].label}</h6>
       </div>
@@ -42,6 +43,7 @@ function moveToSelected(element) {
   if (cart[1] != undefined) {
     $('#carousel').append(`
       <div class="next">
+        <i class="fas fa-times-circle"></i>
         <img src="${cart[1].image}">
         <h6>${cart[1].label}</h6>
       </div>
@@ -51,6 +53,7 @@ function moveToSelected(element) {
   if (cart[2] != undefined) {
     $('#carousel').append(`
       <div class="nextRightSecond">
+        <i class="fas fa-times-circle"></i>
         <img src="${cart[2].image}">
         <h6>${cart[2].label}</h6>
       </div>
@@ -61,6 +64,7 @@ function moveToSelected(element) {
   while (cart[carti] != undefined) {
     $('#carousel').append(`
       <div class="hideRight">
+        <i class="fas fa-times-circle"></i>
         <img src="${cart[carti].image}">
         <h6>${cart[carti].label}</h6>
       </div>
