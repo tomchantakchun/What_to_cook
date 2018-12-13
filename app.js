@@ -59,7 +59,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 //handlebard and view rendering
-app.engine('handlebars', hb({ defaultLayout: 'main' }));
+app.engine('handlebars', hb({ defaultLayout: 'main' ,helpers: { json: function (context) { return JSON.stringify(context);} }}));
 app.set('view engine', 'handlebars');
 app.use('/public',express.static(__dirname + '/public'));
 

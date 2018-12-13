@@ -9,7 +9,7 @@ class groupRouter {
         router.get('/create/:name', (req, res) => { this.createGroup(req, res) })
         router.get('/chat/:id', (req, res) => { this.enterGroup(req, res) })
         router.get('/invite/:name&:group', (req,res)=>{this.inviteToGroup(req,res)})
-        router.get('/receipe/', (req,res)=>{this.addReceipt(req,res)})
+        router.post('/receipe/', (req,res)=>{this.addReceipt(req,res)})
 
         this.router = router;
     }
