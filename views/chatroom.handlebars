@@ -39,13 +39,13 @@
     $('#m').val('');
     return false;
   });
-  socket.on('chat message', function (msg, user, profilePic) {
+  socket.on('chat message', function (msg, user, displayName, profilePic) {
     console.log(msg);
     $('#breaker').before(`
   <div class='talk-line user${user}'>
   <img class='talk-bubble tri-right left-top user${user}' src='${profilePic}'>
   <div class='talk-bubble tri-right left-top'>
-    <p class='nametag'>{{displayName}}</p>
+    <p class='nametag'>${displayName}</p>
   <div class='talktext'><p class=user${user}>${msg}</p></div>
   </div>
   </div>`

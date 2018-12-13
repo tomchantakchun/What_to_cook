@@ -22,7 +22,8 @@ class SearchRouter {
         res.render('search',
         {
             no_need_logo:true,
-            search:true
+            search:true,
+            user:req.user
         });
     }
 
@@ -31,6 +32,7 @@ class SearchRouter {
         {
             no_need_logo:true,
             checkout:true,
+            user:req.user
         });
     }
 

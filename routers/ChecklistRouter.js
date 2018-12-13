@@ -16,7 +16,8 @@ class ChecklistRouter {
         res.render('checklist',
         {
             no_need_logo:true,
-            checklist:true
+            checklist:true,
+            user:req.user
         });
     }
 

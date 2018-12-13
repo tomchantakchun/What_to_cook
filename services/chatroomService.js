@@ -28,11 +28,12 @@ exports = module.exports = function (io) {
             groupid: currentRoom,
             record: msg,
         }).then(()=>{})
-    this.query2 = knex('users').select('profilePic').where('id', currentUser)
+    this.query2 = knex('users').select('profilePic','displayName').where('id', currentUser)
     this.query2.then((data)=>{
       profilePic = data[0].profilePic;
+      displayName = data[0].displayName;
     console.log(profilePic);
-    io.to(currentRoom).emit('chat message', msg, currentUser, profilePic)
+    io.to(currentRoom).emit('chat message', msg, currentUser, displayName, profilePic)
   })
     
   })

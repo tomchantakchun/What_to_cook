@@ -2,13 +2,21 @@
 <link rel="stylesheet" href="/public/css/lobby.css">
 
 <div id="lobby">
-    <h1>Welcome! Please choose your group</h1>
-    <!-- end of error message -->
-    <button id="createRoom"> Create Room </button>
-    {{#each group}}
-    <button class="enterRoom" value="{{this.groupid}}"> {{this.groups}} </button>
-    {{/each}}
 
+    <div id='left'>
+        <h1>Welcome! Please choose your group</h1>
+        <!-- end of error message -->
+        <button id="createRoom"><i class="fas fa-plus-circle"></i> Create New Group</button>
+        {{#each group}}
+        <button class="enterRoom" value="{{this.groupid}}"> {{this.groups}} </button>
+        {{/each}}
+    </div>
+
+    <div id='right'>
+        <div id="logo">
+            <img src="/public/logo/b9376ded-30c7-4ca1-a104-e807474f5f05.png">
+        </div>
+    </div>
 
     <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
     <script>
