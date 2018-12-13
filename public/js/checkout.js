@@ -171,3 +171,16 @@ let fetchRecipeDetail = async (label, item) => {
 function timeout(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
+
+//push cart to a group
+var tempReceipt
+var tempGroup
+
+$('#add-to-group').click(function () {
+    console.log(JSON.parse(sessionStorage.getItem('what_to_cook_cart')))
+    tempReceipt = JSON.parse(sessionStorage.getItem('what_to_cook_cart'))
+    tempGroup = JSON.parse(sessionStorage.getItem('what_to_cook_group'))
+    $.post("../../group/receipe", { tempReceipt: tempReceipt, tempGroup: tempGroup }).done(
+        window.location.href = '/group/chat/' + tempGroup[0].groupid;
+    )
+ })

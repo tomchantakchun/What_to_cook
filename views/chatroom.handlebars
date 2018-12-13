@@ -1,5 +1,6 @@
 <link rel="stylesheet" href="/public/css/chatroom.css">
 <button id="invitation"> Invite other to group </button>
+<button id="searchReceipt"> Search Receipt </button>
 <h3>{{#if success_msg}}
   <div class="alert alert-success">{{success_msg}}</div>
   {{/if}}
@@ -60,4 +61,16 @@
   })
     $("img[src='NA']").attr('src', 'https://okawariplease.files.wordpress.com/2017/09/pompompurin.png')
         });
+
+    //search receipt on click tr
+     $('#searchReceipt').click(function () {
+          sessionStorage.setItem('what_to_cook_group',JSON.stringify(
+            [
+                {
+                    groupid: {{groupid}}
+                }
+            ]
+        ));
+     window.location.href = "../../../search/";
+  })
 </script>
