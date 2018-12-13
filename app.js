@@ -118,7 +118,7 @@ server.listen(3000, () => {
   })
 
 // app.listen
-app.listen(8080, () => {
-    console.log(`Listening to port 8080...`);
+app.listen(3000, () => {
+    console.log(`Listening to port 3000...`);
 })
 
