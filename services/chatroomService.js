@@ -2,16 +2,10 @@
 const knex = require('knex')({
   client: 'pg',
   connection: {
-<<<<<<< HEAD
       host:process.env.RDS_ENDPOINT,
       database: process.env.RDS_DB_NAME,
       user: process.env.RDS_USERNAME,
       password: process.env.RDS_PASSWORD
-=======
-      database: 'WhatToEat',
-      user: 'admin',
-      password: 'admin'
->>>>>>> 8f69d572c1a2a398b6bc507ebbc218d97209f116
   }
 });
 
